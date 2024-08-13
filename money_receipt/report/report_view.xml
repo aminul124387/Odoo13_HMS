@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+        <report id="report_money_receipt_action_form"
+        string="Money Receipt"
+        model="money.receipt"
+        report_type="qweb-pdf"
+        file="general_hospital_v_03.money_receipt_form"
+        name="general_hospital_v_03.money_receipt_form"/>
+
+</odoo>

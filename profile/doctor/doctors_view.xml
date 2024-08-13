@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="doctors_view" model="ir.ui.view">
+            <field name="name">doctors.profile.views</field>
+            <field name="model">doctors.profile</field>
+            <field name="arch" type="xml">
+                <form string="Doctors">
+                    <sheet>
+                        <widget name="web_ribbon" title="Active" bg_color="bg-success"
+                                attrs="{'invisible': [('state', '!=', 'active')]}"/>
+                        <widget name="web_ribbon" title="In Active" bg_color="bg-warning"
+                                attrs="{'invisible': [('state', '!=', 'inactive')]}"/>
+<!--                        profile image-->
+                       <div class="oe_inline position-relative">
+                        <newline/>
+                        <separator string="Doctor Profile"/>
+                        <h4>
+                            <field name="referral_id" readonly="1"/>
+                        </h4>
+                        <br/>
+
+                        <div>
+                            <field name="photo" widget="image" class="oe_avatar oe_right"
+                                   style="max-width:100px;max-height:117px;"/>
+                        </div>
+                        <br/>
+                        <div class="oe_title">
+                            <h3>
+                                <label for="name" string="Full Name" class="oe_edit_only oe_center"
+                                       style="margin-left:20px;"/>
+                            </h3>
+                            <h2>
+                                <field name="name" placeholder="Full Name" required="1"
+                                       style="margin-left:17px; color:green;font-weight:normal;"/>
+                            </h2>
+                        </div>
+                    </div>
+                    <br/>
+                    <br/>
+<!--                        jkjk-->
+
+                        <group string="Doctor Profile">
+                            <group string="Add Doctor">
+                                <field name="mobile"/>
+                                <field name="department"/>
+                                <field name="designation"/>
+                                <field name="degree"/>
+                                <field name="commission_rate"/>
+                                <field name="type"/>
+                                <field name="state"/>
+                                <field name="others"/>
+                            </group>
+                            <group string="Add Your Referel">
+                                <field name="referral_ids" widget="many2many_tags"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Bill Register">
+                                <field name="bill_info">
+                                    <group>
+                                        <field name="total"/>
+                                    </group>
+                                </field>
+                            </page>
+                            <page string="Admission Info">
+                                <field name="admission_info">
+                                    <group>
+                                        <field name="total"/>
+                                    </group>
+                                </field>
+                            </page>
+                            <page string="Commission">
+                                <field name="commission">
+                                    <field name="name"/>
+                                    <field name="commission_configuration_id"/>
+                                    <field name="total_amount"/>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="doctors_tree">
+            <field name="name">doctors.profile.tree</field>
+            <field name="model">doctors.profile</field>
+            <field name="arch" type="xml">
+                <tree string="Doctors List">
+                    <field name="name"/>
+                    <field name="department"/>
+                    <field name="designation"/>
+                    <field name="commission_rate"/>
+                    <field name="type"/>
+                    <field name="state"/>
+                    <field name="others"/>
+                    <field name="last_commission_calculation_date"/>
+                </tree>
+            </field>
+        </record>
+        <record id="doctor_kanban_view" model="ir.ui.view">
+        <field name="name">Broker.Kanban.View</field>
+        <field name="model">doctors.profile</field>
+        <field name="arch" type="xml">
+            <kanban string="Doctors Kanban View" class="o_res_partner_kanban">
+                <field name="id"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click" style="height:135;background-color:#F2F3F4;color:#2E86C1;">
+                            <div style="width:30%;float:left;display:inline-block;">
+                                <img alt="Avatar" t-att-src="kanban_image('doctor.profile','photo',record.id.raw_value)" style="width:100px;height:100px;"/>
+                            </div>
+                            <div style="width:70%;float:right;display:inline-block;">
+                                <ul style="list-style-type:none;">
+                                    <li>
+                                        <b>Full Name:</b>
+                                        <field name="name"/>
+                                    </li>
+                                    <li>
+                                        <b>Doctor Id:</b>
+                                        <field name="referral_id"/>
+                                    </li>
+                                    <li>
+                                        <b>Mobile No:</b>
+                                        <field name="mobile"/>
+                                    </li>
+                                    <li>
+                                        <b>Current State:</b>
+                                        <field name="state"/>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!--                                Phone: <field name="mobile" widget="phone"/><br/>-->
+                            <!--                                Address: <field name="address"/>-->
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+        <!--        This record is used for the Group By Tree view Search-->
+        <record model="ir.ui.view" id="admission_list_search">
+            <field name="name">Doctor.List.Search</field>
+            <field name="model">doctors.profile</field>
+            <field name="arch" type="xml">
+                <search string="Search_Doctor">
+                    <field name="name" filter_domain="['|',('name','ilike',self),('mobile','ilike',self)]"/>
+                    <field name="referral_id"/>
+                    <field name="mobile"/>
+                    <separator>
+                        <filter string="Active" name="active" domain="[('state','=', 'active')]"/>
+                        <filter string="In Active" name="inactive" domain="[('state','=', 'inactive')]"/>
+                    </separator>
+
+                    <group expand="0" string="Group By">
+                        <filter string="Status" name="state" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="doctors_action" model="ir.actions.act_window">
+            <field name="name">Doctors profile</field>
+            <field name="res_model">doctors.profile</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form,kanban,search</field>
+        </record>
+
+        <menuitem name="Doctors info" id="doctors_mainform" parent="profile_menu" action="doctors_action"/>
+    </data>
+</odoo>

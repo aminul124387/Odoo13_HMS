@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="guarantor_view" model="ir.ui.view">
+            <field name="name">guarantor.profile.views</field>
+            <field name="model">guarantor.profile</field>
+            <field name="arch" type="xml">
+                <form string="Guarantor Details">
+                    <sheet>
+                        <group string="Guarantor Profile">
+                            <group>
+                                <field name="guarantor_id"/>
+                                <field name="guarantor_name"/>
+                                <field name="ref"/>
+                                <field name="guarantor_address"/>
+                                <field name="guarantor_relationship"/>
+                                <field name="guarantor_contact"/>
+                                <field name="state"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="guarantor_tree">
+            <field name="name">guarantor.profile.tree</field>
+            <field name="model">guarantor.profile</field>
+            <field name="arch" type="xml">
+                <tree string="Guarantor List View">
+                    <field name="guarantor_id"/>
+                    <field name="guarantor_name"/>
+                    <field name="guarantor_address"/>
+                    <field name="guarantor_relationship"/>
+                    <field name="guarantor_contact"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="guarantor_action" model="ir.actions.act_window">
+            <field name="name">Guarantor Profile</field>
+            <field name="res_model">guarantor.profile</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Guarantor info" id="guarantor_mainform" parent="profile_menu" action="guarantor_action"/>
+    </data>
+</odoo>

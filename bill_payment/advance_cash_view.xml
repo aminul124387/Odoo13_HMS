@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="advance_cash_list_view">
+        <field name="name">Advance.Cash.list.view</field>
+        <field name="model">advance.cash</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="advc_id"/>
+                <field name="partner_name"/>
+                <field name="purpose"/>
+                <field name="amount"/>
+                <field name="account_cash_bank"/>
+                <field name="advc_account"/>
+                <field name="active"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="advance_cash_form_view">
+        <field name="name">advance.cash.form.view</field>
+        <field name="model">advance.cash</field>
+        <field name="arch" type="xml">
+            <form string="tree_string">
+                <header>
+                    <button string="Confirmed" type="object" name="payment_confirmed" class="btn btn-success"/>
+                    <button string="Cancel" type="object" name="payment_cancel" class="btn btn-danger"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group string="Advance Payment">
+                        <group>
+                            <field name="advc_id"/>
+                            <field name="partner_name"/>
+                            <field name="purpose"/>
+                            <field name="amount"/>
+                            <field name="account_cash_bank"/>
+                            <field name="advc_account"/>
+                        </group>
+                    </group>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <footer>
+                        <button name="btn_success2" type="object" string="Pay" class="btn-danger"/> or <button string="Cancel" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <!--    Linking the menu Item code added here ===============================-->
+
+
+    <!--  This code is used for Action Window-->
+    <record model="ir.actions.act_window" id="advance_cash_action_window">
+        <field name="name">Payment</field>
+        <field name="res_model">advance.cash</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!--    <menuitem id="payment_menu_item4" name="Payment" parent="hospital_menu_root"/>-->
+    <menuitem name="Advance Cash" id="hospital_menu_4_list" parent="payment_menu_item4"
+              action="advance_cash_action_window"/>
+</odoo>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="ward_management_form_view">
+            <field name="name">ward.management.form</field>
+            <field name="model">ward.management</field>
+            <field name="arch" type="xml">
+                <form string="Ward Management">
+                    <header>
+                        <button string="Confirm and Print" type="object" name="action_confirm" class="btn btn-success"/>
+                        <button string="Cancel" type="object" name="action_cancel" class="btn btn-danger"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <widget name="web_ribbon" title="Confirmed" bg_color="bg-success"
+                                attrs="{'invisible': [('state', '!=', 'confirmed')]}"/>
+                        <widget name="web_ribbon" title="Cancel" bg_color="bg-danger"
+                                attrs="{'invisible': [('state', '!=', 'cancelled')]}"/>
+                        <group string="Ward Information">
+                            <group>
+                                <field name="ward_name"/>
+                                <field name="bed_available"/>
+                                <field name="add_bed"/>
+                            </group>
+                            <group>
+                                <field name="total_days"/>
+                                <field name="received_date"/>
+                                <field name="referred_by"/>
+                            </group>
+                            <group>
+                                <field name="ward_id"/>
+                                <field name="package_cate"/>
+                                <field name="received_by"/>
+                                <field name="state"/>
+                            </group>
+                            <group>
+                                <field name="admission_id" on_change="onchange_patient_info(admission_id, context)"/>
+                                <field name="patient_name"/>
+                                <field name="mobile"/>
+                                <field name="address"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Admission Details">
+                                <!--                                <field name="package_line_id" mode="tree">-->
+                                <!--                                    <tree string="Select Admission Item" editable="top">-->
+                                <!--                                        <field name="item_name"/>-->
+                                <!--                                        <field name="department"/>-->
+                                <!--                                        <field name="price"/>-->
+                                <!--                                        <field name="total_amount"/>-->
+                                <!--                                    </tree>-->
+                                <!--                                </field>-->
+                            </page>
+                        </notebook>
+                        <group>
+                            <group string="Add Here Another Value">
+                                <!--                            <field name="total"/>-->
+                                <!--                            <field name="discount_percent"/>-->
+                                <!--                            <field name="grand_total"/>-->
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="ward_management_tree_view">
+            <field name="name">ward.management.tree</field>
+            <field name="model">ward.management</field>
+            <field name="arch" type="xml">
+                <tree string="Ward Management List"
+                decoration-success="state=='confirmed'"
+                decoration-danger="state=='cancelled'"
+                decoration-primary="state=='created'"
+                >
+                    <field name="ward_id"/>
+                    <field name="admission_id"/>
+                    <field name="total_days"/>
+                    <field name="patient_name"/>
+                    <field name="received_date"/>
+                    <field name="received_by"/>
+                    <field name="ward_name"/>
+                    <field name="package_cate"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="ward_management_action">
+            <field name="name">Ward Management</field>
+            <field name="res_model">ward.management</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--        <menuitem id="ward_management_menu" name="Ward" parent="hospital_menu_root"-->
+        <!--                  action="ward_management_action"/>-->
+        <menuitem name="Ward" id="ward_menu_sub_item" parent="hospital_menu_root" sequence="6"/>
+        <menuitem name="Ward Management" id="ward_menu_item_sub_item" parent="ward_menu_sub_item"
+                  action="ward_management_action" sequence="01"/>
+    </data>
+</odoo>

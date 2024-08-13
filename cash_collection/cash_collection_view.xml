@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="cash_collection_form_view">
+            <field name="name">cash.collection.form</field>
+            <field name="model">cash.collection</field>
+            <field name="arch" type="xml">
+                <form string="Cash Collection">
+                    <header>
+                        <button name="action_button_confirm" string="Confirm" type="object"/>
+                        <button name="action_button_cancel" string="Cancel" type="object"/>
+                    </header>
+                    <sheet>
+                        <group string="Cash Collection">
+                            <group>
+                                <field name="date"/>
+                                <field name="type"/>
+                                <field name="debit_ac_id"/>
+                                <field name="credit_ac_id"/>
+                                <field name="total"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Cash Collection Details">
+                                <field name="cash_collection_line" mode="tree">
+                                    <tree string="Select Reference Value" editable="bottom">
+                                        <field name="mr_no"/>
+                                        <field name="opd_id"/>
+                                        <field name="bill_id"/>
+                                        <field name="admission_id"/>
+                                        <field name="amount"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="cash_collection_tree">
+            <field name="name">cash.collection.tree</field>
+            <field name="model">cash.collection</field>
+            <field name="arch" type="xml">
+                <tree string="Cash Collection List">
+                    <field name="cash_collection_no"/>
+                    <field name="date"/>
+                    <field name="type"/>
+                    <field name="total"/>
+                    <field name="journal_id"/>
+                    <field name="debit_ac_id"/>
+                    <field name="credit_ac_id"/>
+                    <field name="total"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="cash_collection_action" model="ir.actions.act_window">
+            <field name="name">Cash Collection</field>
+            <field name="res_model">cash.collection</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Report" id="collection_main_menu" parent="hospital_menu_root" sequence="11"/>
+<!--        <menuitem name="Pending Collection Report" id="cash_collection_menu" parent="collection_main_menu"-->
+<!--                  action="cash_collection_action"/>-->
+<!--        <menuitem name="Confirmed Collection Report" id="pending_collection_menu_report" parent="collection_main_menu"-->
+<!--                  action="cash_collection_action"/>-->
+<!--        <menuitem name="Cancel Collection Report" id="cancel_collection_menu_report" parent="collection_main_menu"-->
+<!--                  action="cash_collection_action"/>-->
+<!--        <menuitem name="Collection Report" id="collection_menu_report" parent="collection_main_menu"-->
+<!--                  action="cash_collection_action"/>-->
+<!--        <menuitem name="CC Collection Report" id="cc_collection_menu_report" parent="collection_main_menu"-->
+<!--                  action="cash_collection_action"/>-->
+
+    </data>
+</odoo>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="report_custom_inherit_view" inherit_id="sale.report_saleorder_document">
+            <xpath expr="//div[@t-field='doc.partner_id']" position="after">
+                <div t-if="doc.partner_id.mobile" class="o_partner_mobile_icon">
+                    <i class="fa fa-mobile fa-lg"/>
+                    <t t-esc="doc.partner_id.mobile"/>
+                </div>
+                <div t-if="doc.partner_id.email" class="o_partner_email_icon">
+                    <i class="fa fa-envelope fa-lg"/>
+                    <t t-esc="doc.partner_id.email"/>
+                </div>
+            </xpath>
+<!--            <xpath expr="//div[@id='informations']" position="inside">-->
+<!--                <div t-if="doc.date_order and doc.state in ['draft','sent']" class="col-auto mw-100 mb-2">-->
+<!--                    <strong>Confirmed Date:</strong>-->
+<!--                    <p class="m-0" t-field="doc.date_order" t-options='{"widget": "date"}'/>-->
+<!--                </div>-->
+<!--            </xpath>-->
+            <xpath expr="//div[@id='informations']" position="inside">
+                <div class="row">
+
+                    <div class="col-md-3 col-12">
+                        <div t-if="doc.date_order and doc.state in ['draft','sent']" class="custom-column col-auto mw-100 mb-2">
+                            <strong>Confirmed Date:</strong>
+                            <p class="m-0" t-field="doc.date_order" t-options='{"widget": "date"}'/>
+                        </div>
+                    </div>
+                </div>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="ambulance_registration_form_view" model="ir.ui.view">
+            <field name="name">Vehicle Registration</field>
+            <field name="model">ambulance.registration</field>
+            <field name="arch" type="xml">
+                <form string="Ambulance Registration">
+                    <sheet>
+                        <group string="Ambulance Registration">
+                            <field name="vehicle_id"/>
+                            <field name="vehicle_type"/>
+                            <field name="vehicle_number"/>
+                            <field name="vehicle_name"/>
+                            <field name="state"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="ambulance_registration_action" model="ir.actions.act_window">
+            <field name="name">Ambulance Registration</field>
+            <field name="res_model">ambulance.registration</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.ui.view" id="ambulance_registration_tree">
+            <field name="name">Ambulance Registration</field>
+            <field name="model">ambulance.registration</field>
+            <field name="arch" type="xml">
+                <tree string="Ambulance List">
+                    <field name="vehicle_id"/>
+                    <field name="vehicle_type"/>
+                    <field name="vehicle_number"/>
+                    <field name="vehicle_name"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <menuitem name="General Hospital" id="hospital_menu_root"/>
+        <menuitem name="Ambulance" id="ambulance_menu" parent="hospital_menu_root" sequence="15"/>
+        <menuitem name="Ambulance Registration" id="ambulance_registration_menu" parent="ambulance_menu"
+                  action="ambulance_registration_action"/>
+    </data>
+</odoo>

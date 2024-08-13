@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="emergency_admission_list_view">
+        <field name="name">Emergency Admission.List.View</field>
+        <field name="model">emergency_admissin.info</field>
+        <field name="arch" type="xml">
+            <tree string="Emergency Admission"
+              decoration-success="state=='confirmed'"
+              decoration-danger="state=='cancelled'"
+              decoration-primary="state=='pending'"
+            >
+                <field name="emergency_admission_id"/>
+                <field name="patient_id"/>
+                <field name="patient_name"/>
+                <field name="address"/>
+                <field name="age"/>
+                <field name="gender"/>
+                <field name="mobile"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="emergency_admission_form_view">
+        <field name="name">Emergency Admission.Form.View</field>
+        <field name="model">emergency_admissin.info</field>
+        <field name="arch" type="xml">
+            <form string="tree_string">
+                <header>
+                    <button string="Print Report" type="object" class="oe_highlight" name="action_report"/>
+                    <button string="Confirm and Print" type="object" name="action_confirm" class="btn btn-success"/>
+                    <button string="Add Test" type="object" name="add_test" class="btn btn-info"/>
+                    <button string="Add Discount" type="object" name="add_discount" class="btn btn-primary"/>
+                    <button string="Final Settlement" type="object" name="customer_settlement" class="btn btn-warning"/>
+                    <button string="Add Payment" type="object" name="customer_payment" class="btn btn-info"/>
+                    <button string="Cancel" type="object" name="action_cancel" class="btn btn-danger"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Pending" bg_color="bg-warning" attrs="{'invisible': [('state', '!=', 'pending')]}"/>
+                    <widget name="web_ribbon" title="Created" bg_color="bg-primary" attrs="{'invisible': [('state', '!=', 'created')]}"/>
+                    <widget name="web_ribbon" title="Confirmed" bg_color="bg-success" attrs="{'invisible': [('state', '!=', 'confirmed')]}"/>
+                    <widget name="web_ribbon" title="Cancel" bg_color="bg-danger" attrs="{'invisible': [('state', '!=', 'cancelled')]}"/>
+                    <group string="Emergency Admission Form">
+                        <group>
+                            <field name="date"/>
+                            <field name="emergency_admission_id" readonly="1"/>
+                            <field name="patient_id" readonly="1"/>
+                            <field name="patient_name"
+                                  widget="many2one_avatar" placeholder="Select/Create Patient Info"/>
+                            <field name="address" placeholder="Give Your Address"/>
+                            <field name="age" placeholder="Enter Your Age"/>
+                            <field name="gender"/>
+                            <field name="mobile"/>
+                            <field name="email"/>
+                            <field name="referred_by"/>
+                            <field name="operation_date"/>
+                            <field name="package"/>
+                            <field name="emergency_dept"/>
+                            <field name="release_note"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Emergency Admission Details">
+                            <field name="emergency_admission_line_id" mode="tree">
+                                <tree string="Select Admission Item" editable="top">
+                                    <field name="item_name" on_change="onchange_item(item_name, context)"/>
+                                    <field name="department"/>
+                                    <field name="price"/>
+                                    <field name="discount"/>
+                                    <field name="discount_percent"/>
+                                    <field name="flat_discount"/>
+                                    <field name="total_discount"/>
+                                    <field name="total_amount"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Guarantor">
+                            <field name="emergency_guarantor_line_id" mode="tree">
+                                <tree string="Select Reference Value" editable="bottom">
+                                    <field name="guarantor_name"/>
+                                    <field name="guarantor_address"/>
+                                    <field name="guarantor_relationship"/>
+                                    <field name="guarantor_contact"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Payment Info">
+                            <field name="emergency_admission_payment_line_id" mode="tree">
+                                <tree string="Select Reference Value" editable="bottom">
+                                    <field name="bank_name"/>
+                                    <field name="payment_date"/>
+                                    <field name="payment_amount"/>
+                                    <field name="payment_type"/>
+                                    <field name="card_no"/>
+                                    <field name="money_receipt_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Journal Relations">
+                            <field name="emergency_admission_journal_relation_line_id" mode="tree">
+                                <tree string="Journal Relations" editable="top">
+                                    <field name="journal_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <group>
+                        <group>
+                            <field name="admission_payment_type"/>
+                            <field name="account_number"/>
+                            <field name="total_without_discount"/>
+                            <field name="discount_percent"/>
+                            <field name="other_discount"/>
+                            <field name="total"/>
+                            <field name="grand_total"/>
+                            <field name="paid_amount"/>
+                            <field name="service_charge"/>
+                            <field name="due_amount"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--    Linking the menu Item code added here ===============================-->
+
+    <record model="ir.ui.view" id="emergency_admission_list_search">
+        <field name="name">Emergency.Admission.List.Search</field>
+        <field name="model">emergency_admissin.info</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="emergency_admission_id"/>
+                <field name="patient_id"/>
+                <field name="patient_name"/>
+                <field name="mobile"/>
+            </search>
+        </field>
+    </record>
+    <!--  This code is used for Action Window-->
+    <record model="ir.actions.act_window" id="emergency_admission_action_window">
+        <field name="name">Emergency Admission</field>
+        <field name="res_model">emergency_admissin.info</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="emergency_admission_menu_item" name="Emergency" parent="hospital_menu_root" sequence="1"/>
+    <menuitem name="Pending Emergency Admission" id="pending_emergency_admission_sub_menu" parent="emergency_admission_menu_item"
+              action="emergency_admission_action_window"/>
+    <menuitem name="Activate Emergency Admission" id="activate_emergency_admission_sub_menu" parent="emergency_admission_menu_item"
+              action="emergency_admission_action_window"/>
+    <menuitem name="Cancel Emergency Admission" id="cancel_emergency_admission_sub_menu" parent="emergency_admission_menu_item"
+              action="emergency_admission_action_window"/>
+    <menuitem name="Release Emergency Admission" id="release_emergency_admission_sub_menu" parent="emergency_admission_menu_item"
+              action="emergency_admission_action_window"/>
+</odoo>

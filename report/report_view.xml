@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+     <report id="patient_identity_card"
+            string="Patient Card"
+            model="patient.info"
+            report_type="qweb-pdf"
+            file="general_hospital_v_03.patient_card_template"
+            name="general_hospital_v_03.patient_card_template"/>
+
+
+    <report id="report_admission_action_form"
+            string="Admission"
+            model="admission.info"
+            report_type="qweb-pdf"
+            file="general_hospital_v_03.admission_form"
+            name="general_hospital_v_03.admission_form"/>
+
+
+<!--    <report id="details_report_admission_action"-->
+<!--            string="Details Admission Report"-->
+<!--            model="admission.info.wizard"-->
+<!--            report_type="qweb-pdf"-->
+<!--            file="general_hospital_v_03.details_admission_report"-->
+<!--            name="general_hospital_v_03.details_admission_report"/>-->
+
+    <record id="appointment_details_print_report_action" model="ir.actions.report">
+        <field name="name">Patient Appointment Report</field>
+        <field name="model">appointment.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">general_hospital_v_03.details_appointment_report_template_id</field>
+        <field name="report_file">general_hospital_v_03.details_appointment_report_template_id</field>
+        <field name="binding_model_id" ref="model_appointment_report_wizard"/>
+        <field name="binding_type">report</field>
+    </record>
+    <record id="patient_details_report_action" model="ir.actions.report">
+        <field name="name">Patient Details Report</field>
+        <field name="model">patient.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">general_hospital_v_03.patient_details_report_template</field>
+        <field name="report_file">general_hospital_v_03.patient_details_report_template</field>
+        <field name="binding_model_id" ref="model_patient_report_wizard"/>
+        <field name="binding_type">report</field>
+    </record>
+    <record id="admission_details_report_action" model="ir.actions.report">
+        <field name="name">Admission Details Report</field>
+        <field name="model">admission.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">general_hospital_v_03.admission_details_report_template</field>
+        <field name="report_file">general_hospital_v_03.admission_details_report_template</field>
+        <field name="binding_model_id" ref="model_admission_report_wizard"/>
+        <field name="binding_type">report</field>
+    </record>
+
+
+
+</odoo>

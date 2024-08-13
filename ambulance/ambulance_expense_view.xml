@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="ambulance_expense_view" model="ir.ui.view">
+            <field name="name">Ambulance Expenses</field>
+            <field name="model">ambulance.expense</field>
+            <field name="arch" type="xml">
+                <form string="Room">
+                    <sheet>
+                        <group string="Ambulance Expense">
+                            <group>
+                                <field name="ambulance_id"/>
+                                <field name="fuel_cost"/>
+                                <field name="other_cost"/>
+                                <field name="description"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="ambulance_expense_action" model="ir.actions.act_window">
+            <field name="name">Ambulance Expense</field>
+            <field name="res_model">ambulance.expense</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.ui.view" id="ambulance_expense_tree">
+            <field name="name">Ambulance Expense</field>
+            <field name="model">ambulance.expense</field>
+            <field name="arch" type="xml">
+                <tree string="Ambulance Expense List">
+                    <field name="ambulance_id"/>
+                    <field name="fuel_cost"/>
+                    <field name="other_cost"/>
+                    <field name="description"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <menuitem name="Ambulance Expense" id="ambulance_expense_menu" parent="ambulance_menu"
+                  action="ambulance_expense_action"/>
+    </data>
+</odoo>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <template id="admission_details_report_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <div class="text-center">
+                        <h1>Lions Eye &amp; General Hospital</h1>
+                        <h2> Admission Details </h2>
+                    </div>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <table class="oe_structure colored-table">
+                        <tr style="padding: 10px;">
+                            <td style="padding-right: 10px;">
+                                <strong>Patient:</strong>
+                            </td>
+                            <td></td>
+                            <td style="padding-left: 10px;">
+                                <t t-if="form_data.get('patient_id')">
+                                    <span t-esc="form_data['patient_id'][1]" style="color: green;"/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr style="padding: 10px;">
+                            <td style="padding-right: 10px;">
+                                <strong>Date From:</strong>
+                            </td>
+                            <td></td>
+                            <td style="padding-left: 10px;">
+                                <t t-if="form_data.get('start_date')">
+                                    <span t-esc="form_data['start_date']" style="color: green;"/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr style="padding: 10px;">
+                            <td style="padding-right: 10px;">
+                                <strong>Date To:</strong>
+                            </td>
+                            <td></td>
+                            <td style="padding-left: 10px;">
+                                <t t-if="form_data.get('end_date')">
+                                    <span t-esc="form_data['end_date']" style="color: green;"/>
+                                </t>
+                            </td>
+                        </tr>
+
+                    </table>
+                    <br/>
+                    <table class="table table-bordered mt32">
+                        <thead>
+                            <tr>
+                                <th t-attf-name="th_reference" class="text-left">
+                                    <span>Reference</span>
+                                </th>
+                                <th t-attf-name="th_age" class="text-left">
+                                    <span>Patients</span>
+                                </th>
+                                <th t-attf-name="th_date" class="text-left">
+                                    <span>Admission Date</span>
+                                </th>
+                                <th t-attf-name="th_operation_date" class="text-left">
+                                    <span>Operation Date</span>
+                                </th>
+                                <th t-attf-name="th_reffered_by" class="text-left">
+                                    <span>Reffered By</span>
+                                </th>
+                                <th t-attf-name="th_refferel" class="text-left">
+                                    <span>Refferel</span>
+                                </th>
+                                <!--                                <th t-attf-name="th_doctor" class="text-left">-->
+                                <!--                                    <span>Doctor Name</span>-->
+                                <!--                                </th>-->
+<!--                                <th t-attf-name="grand_total_amount" class="text-left">-->
+<!--                                    <span>Total Without Discount</span>-->
+<!--                                </th>-->
+                                <th t-attf-name="th_amount" class="text-left">
+                                    <span>Grand Total</span>
+                                </th>
+                                <th t-attf-name="th_duration" class="text-left">
+                                    <span>Due Amount</span>
+                                </th>
+                                <th t-attf-name="th_state" class="text-left">
+                                    <span>Status</span>
+                                </th>
+                                <th t-attf-name="th_created_by" class="text-left">
+                                    <span>Created By</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <t t-set="admission_count" t-value="0"/>
+                        <t t-foreach="admissions" t-as="line">
+                            <t t-set="admission_count" t-value="admission_count + 1"/>
+                            <tr>
+                                <td>
+                                    <span t-esc="line['admission_id']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="line['patient_name']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="line['date']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="line['operation_date']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="line['referred_by']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="line['referral']"/>
+                                </td>
+                                <!-- Display other fields as needed -->
+<!--                                <td>-->
+<!--                                    <span t-esc="line['total_without_discount']"/>-->
+<!--                                </td>-->
+                                <td>
+                                    <span t-esc="line['total']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="line['due_amount']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="line['state']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="line['user_id']"/>
+                                </td>
+                            </tr>
+                        </t>
+
+                        <tr>
+                            <td>
+                                <strong>Total Admissions:</strong>
+                            </td>
+                            <td>
+                                <strong>
+                                    <span t-esc="admission_count"/>
+                                </strong>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
+

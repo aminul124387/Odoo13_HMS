@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="corporate_discount_list_view">
+        <field name="name">Corporate.Discount.list.view</field>
+        <field name="model">corporate.discount</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="corporate_discount_id"/>
+                <field name="client_name"/>
+                <field name="discount_type"/>
+                <field name="over_all_discount"/>
+                <field name="from_date"/>
+                <field name="to_date"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="corporate_discount_form_view">
+        <field name="name">Corporate.Discount.form.view</field>
+        <field name="model">corporate.discount</field>
+        <field name="arch" type="xml">
+            <form string="tree_string">
+                <header>
+                    <button string="Approved" type="object" class="btn btn-success"/>
+                    <button string="Cancel" type="object" class="btn btn-danger"/>
+                </header>
+                <sheet>
+                    <group string="Discount Configuration Form">
+                        <group>
+                            <field name="date"/>
+                        </group>
+                        <group>
+                            <field name="corporate_discount_id"/>
+                        </group>
+                        <group>
+                            <field name="client_name"/>
+                        </group>
+                        <group>
+                            <field name="discount_type"/>
+                            <field name="over_all_discount"/>
+                        </group>
+                        <group>
+                            <field name="from_date"/>
+                        </group>
+                        <group>
+                            <field name="to_date"/>
+                        </group>
+                    </group>
+                    <br/>
+                    <notebook>
+                        <page string="Payment Info">
+                                <field name="corporate_discount_configure_line_id" mode="tree">
+                                    <tree string="Select Reference Value" editable="bottom">
+                                        <field name="item_name"/>
+                                        <field name="department"/>
+                                        <field name="applicable"/>
+                                        <field name="price"/>
+                                        <field name="fixed_amount"/>
+                                        <field name="amount"/>
+                                        <field name="after_discount_amount"/>
+                                    </tree>
+                                </field>
+                            </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <!--    Linking the menu Item code added here ===============================-->
+
+
+    <!--  This code is used for Action Window-->
+    <record model="ir.actions.act_window" id="corporate_discount_configure_action_window">
+        <field name="name">Corporate Discount Type</field>
+        <field name="res_model">corporate.discount</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem name="Corporate Discount Configure" id="corporate_discount_configure_menu_1" parent="discount_menu"
+              action="corporate_discount_configure_action_window"/>
+</odoo>

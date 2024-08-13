@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="commission_list_view">
+        <field name="name">commission.list.view</field>
+        <field name="model">commission.configure</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="commission_id"/>
+                <field name="doctor_name"/>
+                <field name="broker_name"/>
+                <field name="mou_start_date"/>
+                <field name="mou_end_date"/>
+                <field name="total_amount"/>
+                <field name="department_list"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="commission_form_view">
+        <field name="name">commission.form.view</field>
+        <field name="model">commission.configure</field>
+        <field name="arch" type="xml">
+            <form string="tree_string">
+                <header>
+                    <button string="Print Report" type="object" class="oe_highlight" name="print_quotation_report"/>
+                    <button string="Confirm and Print" type="object" name="action_confirm" class="oe_highlight"/>
+                    <button string="Add Test" type="object" name="add_test"/>
+                    <button string="Add Discount" type="object" name="add_discpunt"/>
+                    <button string="Final Settlement" type="object" name="customer_settlement"/>
+                    <button string="Add Payment" type="object" name="customer_payment" class="oe_highlight"/>
+                    <button string="Cancel" type="object" name="action_cancel"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group string="Commission Configuration Form">
+                        <group>
+                            <field name="date"/>
+                            <field name="commission_id" readonly="1"/>
+                            <field name="broker_name" filter_domain="['|',('patient_name','ilike',self),('patient_id','ilike',self)]"/>
+                            <field name="mou_start_date"/>
+                        </group>
+                        <group>
+                            <field name="mou_end_date"/>
+                            <field name="doctor_name"/>
+                        </group>
+                        <group>
+                            <field name="overall_commission_rate"/>
+                            <field name="overall_discount_rate"/>
+                            <field name="max_discount_rate"/>
+                        </group>
+                        <group>
+                            <field name="deduct_access_discount_from_com"/>
+                            <field name="department_list"/>
+                            <field name="calculation_base_price"/>
+                            <field name="total_amount"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Commission Item Details">
+                            <field name="commission_line_id" mode="tree" style="height:20px;">
+                                <tree string="Select Commission Item" editable="top">
+                                    <field name="item_name" on_change="onchange_item(item_name, context)"/>
+                                    <field name="department"/>
+                                    <field name="applicable"/>
+                                    <field name="base_price"/>
+                                    <field name="fixed_amount"/>
+                                    <field name="amount"/>
+                                    <field name="test_fees"/>
+                                    <field name="commission_amount"/>
+                                    <field name="max_commission_amount"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--    Linking the menu Item code added here ===============================-->
+
+    <record model="ir.ui.view" id="commission_list_search">
+        <field name="name">Commission.list.Search</field>
+        <field name="model">commission.configure</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="commission_id"/>
+                <field name="doctor_name"/>
+                <field name="broker_name"/>
+                <field name="total_amount"/>
+            </search>
+        </field>
+    </record>
+    <!--  This code is used for Action Window-->
+    <record model="ir.actions.act_window" id="commission_action_window">
+        <field name="name">Commission</field>
+        <field name="res_model">commission.configure</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="commission_menu_item" name="Commission" parent="hospital_menu_root" sequence="14"/>
+    <menuitem name="Commission Configuration" id="commission_sub_menu_list_1" parent="commission_menu_item" action="commission_action_window"  sequence="3"/>
+
+</odoo>

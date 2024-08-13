@@ -1,0 +1,365 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="admission_tree_view">
+        <field name="name">admission.Tree.View</field>
+        <field name="model">admission.info</field>
+        <field name="arch" type="xml">
+            <tree
+                    decoration-success="state=='confirmed'"
+                    decoration-danger="state=='cancelled'"
+                    decoration-primary="state=='pending'"
+                    create="true" delete="true" edit="true"
+            >
+
+                <field name="admission_id" widget="list_activity"/>
+<!--                <field name="patient_id"/>-->
+                <field name="patient_name" widget="many2one_search" search="_name_search"/>
+                <field name="address"/>
+                <field name="age"/>
+                <field name="gender"/>
+                <field name="mobile"/>
+                <!--                <field name="activity_ids" widget="list_activity"/>-->
+                <field name="state" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="admission_form_view">
+        <field name="name">Admission.Form.View</field>
+        <field name="model">admission.info</field>
+        <field name="arch" type="xml">
+            <form string="tree_string">
+                <header>
+                    <button type="action" name="%(general_hospital_v_03.action_admission_reverse_id)d"
+                                string="Admission Reverse"
+                                class="btn btn-info"
+                                attrs="{'invisible': [('state', '!=', 'confirmed')]}"/>
+<!--                    <button type="action" name="%(general_hospital_v_03.wizard_money_receipt_action_id)d"-->
+<!--                                string="Payment Refund"-->
+<!--                                class="oe_highlight"/>-->
+                    <button string="Add Investigation" type="object" name="btn_investigation_item_pos"
+                            class="oe_highlight"/>
+<!--                    <button string="Add Discount" type="object" name="open_discount_form_view" class="btn btn-primary"/>-->
+                    <button string="Add Payment" type="object" name="add_payment_btn" class="btn btn-info"/>
+                    <button string="Confirm and Print" type="object" name="action_confirm_bill"
+                            class="btn btn-success"
+                            />
+                    <button string="Final Settlement" type="object" name="btn_release_check_due_amount"
+                            class="btn btn-warning" attrs="{'invisible': [('state', '!=', 'confirmed')]}"/>
+                    <button string="Cancel" type="object" name="btn_cancel_form_show" class="btn btn-danger"
+                                attrs="{'invisible': [('state', '!=', 'confirmed')]}"/>
+                    <button string="Print Release Slip" type="object" name="btn_release_slip_print" class="btn btn-warning"
+                    attrs="{'invisible': [('state', '!=', 'release')]}"/>
+                    <field name="state" widget="statusbar"
+                           options="{'color': {'confirmed': 'green', 'cancelled': 'red','pending': 'yellow','paid': 'blue'}}"/>
+
+                </header>
+                <sheet>
+                    <!--                    <widget title="Confirmed" bg_color="bg.danger" name="web_ribbon" attrs="{'invisible':[('state','in',['confirmed', '!=' True])]}"/>-->
+                    <widget name="web_ribbon" title="Pending" bg_color="bg-warning"
+                            attrs="{'invisible': [('state', '!=', 'pending')]}"/>
+                    <widget name="web_ribbon" title="Confirmed" bg_color="bg-success"
+                            attrs="{'invisible': [('state', '!=', 'confirmed')]}"/>
+                    <widget name="web_ribbon" title="Full Paid" bg_color="bg-info"
+                            attrs="{'invisible': ['|', ('state', '!=', 'confirmed'), ('due_amount', '!=', 0)]}"/>
+                    <widget name="web_ribbon" title="Cancel" bg_color="bg-danger"
+                            attrs="{'invisible': [('state', '!=', 'cancelled')]}"/>
+                    <!--                    <widget name="web_ribbon" title="Draft" bg_color="bg-info" attrs="{'invisible': [('state', '!=', 'draft')]}"/>-->
+
+                    <group string="*** Admission Form ***">
+                        <group>
+                            <field name="date"/>
+                            <field name="admission_id" readonly="1"/>
+                            <field name="payment_type" readonly="1"/>
+<!--                            <field name="patient_id" readonly="1"/>-->
+                            <field name="patient_name" placeholder="Select Patient Name"
+                            options="{'no_quick_create': True, 'no_create_edit' : True, 'no_open':True}"/>
+                            <field name="address"/>
+                            <field name="age"/>
+                            <field name="gender"/>
+                            <field name="mobile"/>
+                            <field name="email"/>
+                            <field name="blood_group" placeholder="Patient Blood Group"/>
+
+
+                            <!--                            <field name="referel_name"/>-->
+                        </group>
+                        <group>
+                            <field name="referred_by" placeholder="Select Doctor Name"
+                                   options="{'no_quick_create': True, 'no_create_edit' : True, 'no_open':True}" widget="many2one"/>
+                            <field name="referral" placeholder="Select Referral/Broker Name" widget="many2one"
+                            options="{'no_quick_create': True, 'no_create_edit' : True, 'no_open':True}"/>
+                            <field name="operation_date" placeholder="Select Operation Date"/>
+<!--                            <field name="item_name" placeholder="Select Your Package"/>-->
+                            <field name="emergency_dept" placeholder="If Emergency, Check Please"/><hr/>
+<!--                            <field name="cancel_reason" placeholder="Write Valid Reason to Cancel The Admission"/>-->
+                            <field name="release_note" placeholder="Give Doctor Release Note" readonly="1"/>
+                            <field name="release_note_date" readonly="1"/>
+                            <field name="release_note_make_by" readonly="1"/>
+                            <button name="action_open_release_note_popup" string="Add Release Note" type="object" class="btn btn-primary"
+                            attrs="{'invisible':[('state', '!=', 'confirmed')]}"/><hr/>
+                            <field name="diagnosis" readonly="1"/>
+                            <field name="treatment" readonly="1"/>
+                            <field name="cancel_reason"
+                                       placeholder="Write the Valid Cancel Reason!"
+                                       attrs="{'invisible': [('state', '!=', 'cancelled')],
+                                        'readonly': [('state', '=', 'cancelled')]}"/>
+                                <field name="cancel_approved_by"
+                                       placeholder="This Cancel Approved By!"
+                                       attrs="{'invisible': [('state', '!=', 'cancelled')],
+                                        'readonly': [('state', '=', 'cancelled')]}" widget="many2one"/>
+                            <field name="cancel_date" attrs="{'invisible': [('state', '!=', 'cancelled')],
+                                        'readonly': [('state', '=', 'cancelled')]}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Admission Details">
+                            <field name="admission_line_id" mode="tree">
+                                <tree string="Select Admission Item" editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="item_name" on_change="onchange_item(item_name, context)" class="text-left"/>
+                                    <field name="department"/>
+                                    <field name="quantity" class="text-center"/>
+                                    <field name="has_service_charge" class="text-center"/>
+                                    <field name="more_than_one_days" class="text-center"/>
+                                    <field name="createdate" class="text-center"/>
+                                    <field name="total_price"/>
+                                    <field name="discount_percent" class="text-center"/>
+                                    <field name="total_discount" class="text-center"/>
+                                    <field name="sub_total_amount"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Payment Info">
+                            <field name="hospital_admission_payment_line" mode="tree">
+                                <tree>
+                                    <field name="money_receipt_id" widget="many2one"/>
+                                    <field name="date"/>
+                                    <field name="paid"/>
+                                    <field name="adv"/>
+                                    <field name="payment_type"/>
+                                    <field name="card_no_payment"/>
+                                    <!--                                        <field name="bank_name"/>-->
+                                    <field name="user_id"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Journal Relations">
+                            <field name="admission_journal_line_id" mode="tree">
+                                <tree string="Journal Relations">
+                                    <field name="journal_id" widget="many2one"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Guarantor">
+                            <field name="guarantor_line_id" mode="tree">
+                                <tree string="Select Reference Value" editable="bottom">
+                                    <field name="guarantor_name" widget="many2one"/>
+                                    <field name="guarantor_address"/>
+                                    <field name="guarantor_relationship"/>
+                                    <field name="guarantor_contact"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Investigation">
+<!--                            <field name="investigation_line_id">-->
+<!--                                <tree string="See Your Investigations">-->
+<!--                                    <field name="test"/>-->
+<!--                                </tree>-->
+<!--                            </field>-->
+                        </page>
+                        <page string="Consultant Fees">
+<!--                            <field name="consultant_line_id">-->
+<!--                                <tree string="All Consultant Fees">-->
+<!--                                    <field name="test_consultant_name"/>-->
+<!--                                </tree>-->
+<!--                            </field>-->
+                        </page>
+                        <page string="Medicine">
+<!--                            <field name="medicine_line_id">-->
+<!--                                <tree string="Pos Medicine">-->
+<!--                                    <field name="test_medicine"/>-->
+<!--                                </tree>-->
+<!--                            </field>-->
+                        </page>
+                        <page string="Bed/Cabin">
+<!--                            <field name="bed_cabin_line_id">-->
+<!--                                <tree string="Booked Your Cabin/Bed">-->
+<!--                                    <field name="test_bed_cabin"/>-->
+<!--                                </tree>-->
+<!--                            </field>-->
+                        </page>
+                        <page string="Evaluation">
+<!--                            <field name="patient_evaluation_line_id">-->
+<!--                                <tree string="Patient Evaluation">-->
+<!--                                    <field name="test_patient_evaluation"/>-->
+<!--                                </tree>-->
+<!--                            </field>-->
+                        </page>
+                        <page string="prescriptions">
+<!--                            <field name="prescription_line_id">-->
+<!--                                <tree string="Patient Prescription">-->
+<!--                                    <field name="test_prescription"/>-->
+<!--                                </tree>-->
+<!--                            </field>-->
+                        </page>
+                    </notebook>
+                    <group>
+                        <group>
+                            <field name="service_charge" placeholder="Give Admission Service Charge"/>
+                            <field name="payment_type"/>
+                            <field name="cash_amount"
+                               attrs="{'invisible': [('payment_type', '!=', 'cash'),
+                               ('payment_type', '!=', 'card_cash'),
+                               ('payment_type', '!=', 'm_cash_cash'),
+                               ('payment_type', '!=', 'card_cash_mcash')
+                               ]}"
+                               placeholder='Enter Cash Amount'/>
+
+                            <field name="psn"
+                                   attrs="{'invisible': [('payment_type', '!=', 'm_cash'),
+                                   ('payment_type', '!=', 'm_cash_cash'),
+                                   ('payment_type', '!=', 'm_cash_card'),
+                                   ('payment_type', '!=', 'card_cash_mcash')
+                                   ]}"
+                                   placeholder='Select Mobile Payment Type'/>
+                            <field name="mcash_mobile_no_payment"
+                                   attrs="{'invisible': [('payment_type', '!=', 'm_cash'),
+                                   ('payment_type', '!=', 'm_cash_cash'),
+                                   ('payment_type', '!=', 'm_cash_card'),
+                                   ('payment_type', '!=', 'card_cash_mcash')
+
+                                   ]}"
+                                   placeholder='Enter Last 4 Digit'/>
+                            <field name="mfs_amount"
+                                   attrs="{'invisible': [('payment_type', '!=', 'm_cash'),
+                                   ('payment_type', '!=', 'm_cash_cash'),
+                                   ('payment_type', '!=', 'm_cash_card'),
+                                   ('payment_type', '!=', 'card_cash_mcash')
+                                   ]}"
+                                   placeholder='Enter MFS Amount'/>
+                            <field name="ac_no" attrs="{'invisible': [
+                                ('payment_type', '!=', 'card'),
+                                ('payment_type', '!=', 'card_cash'),
+                                ('payment_type', '!=', 'm_cash_card'),
+                                ('payment_type', '!=', 'card_cash_mcash')
+
+
+                            ]}"
+                                   placeholder='Select Account'/>
+                            <field name="card_no_payment" attrs="{'invisible': [
+                            ('payment_type', '!=', 'card'),
+                            ('payment_type', '!=', 'card_cash'),
+                            ('payment_type', '!=', 'm_cash_card'),
+                            ('payment_type', '!=', 'card_cash_mcash')
+
+                            ]}"
+                                   placeholder='Enter Last 4 Digit'/>
+
+
+                            <field name="card_amount"
+                                   attrs="{'invisible': [('payment_type', '!=', 'card'),
+                                   ('payment_type', '!=', 'card_cash'),
+                                   ('payment_type', '!=', 'm_cash_card'),
+                                   ('payment_type', '!=', 'card_cash_mcash')
+
+                                   ]}"
+                                   placeholder='Enter Card Amount'/>
+                            <field name="discount_remarks" attrs="{
+                            'required': [('discount_required', '=', True)],
+                            'visible': [('discount_required', '=', True)]
+                            }"/><hr/>
+                            <field name="discount_required" invisible="1"/>
+                          <field name="refund_amount" readonly="1"/>
+                          <field name="payable_amount" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="currency_id"/>
+                            <field name="total_without_discount" widget="monetary"/>
+                            <field name="discount_percent" attrs="{'readonly': [('state', '=', 'confirmed')]}"/>
+                            <field name="other_discount" attrs="{'readonly': [('state', '=', 'confirmed')]}"
+                                   widget="monetary"/>
+                            <field name="total" attrs="{'readonly': [('state', '=', 'confirmed')]}" widget="monetary"/>
+                            <field name="paid" attrs="{'invisible': [('state', '=', 'pending')],
+                                'readonly': [('state', '=', 'confirmed')]
+                            }" widget="monetary"/>
+                            <field name="adv" attrs="{'readonly': [('state', '=', 'confirmed')]}" widget="monetary"/>
+                            <field name="due_amount" attrs="{'readonly': [('state', '=', 'confirmed')]}"
+                                   widget="monetary"/>
+                        </group>
+                    </group>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+    <!--    <record id="hospital_patient_search" model="ir.ui.view">-->
+    <!--            <field name="name">hospital.patient.search</field>-->
+    <!--            <field name="model">hospital.patient</field>-->
+    <!--            -->
+    <!--    </record>-->
+    <!--    Linking the menu Item code added here ===============================-->
+
+    <record model="ir.ui.view" id="admission_list_search">
+        <field name="name">admission.list.Search</field>
+        <field name="model">admission.info</field>
+        <field name="arch" type="xml">
+            <search string="Search_Patients">
+                <field name="patient_name" filter_domain="['|',('patient_name','ilike',self),('mobile','ilike',self)]"/>
+<!--                <field name="patient_id"/>-->
+                <field name="mobile"/>
+                <separator>
+                    <filter string="Confirmed" name="confirmed" domain="[('state','=', 'confirmed')]"/>
+                    <filter string="Cancelled" name="cancelled" domain="[('state','=', 'cancelled')]"/>
+                </separator>
+
+                <group expand="0" string="Group By">
+                    <filter string="Status" name="state" context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!--  This code is used for Action Window-->
+    <record model="ir.actions.act_window" id="admission_action_window">
+        <field name="name">Admission</field>
+        <field name="res_model">admission.info</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('state', '=', 'pending')]</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="activate_admission_action_window">
+        <field name="name">Admission</field>
+        <field name="res_model">admission.info</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('state', '=', 'confirmed')]</field>
+    </record>
+    <record model="ir.actions.act_window" id="release_admission_action_window">
+        <field name="name">Admission</field>
+        <field name="res_model">admission.info</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('state', '=', 'release')]</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="cancel_admission_action_window">
+        <field name="name">Admission</field>
+        <field name="res_model">admission.info</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('state', '=', 'cancelled')]</field>
+    </record>
+    <menuitem name="General Hospital" id="hospital_menu_root"/>
+
+    <menuitem id="admission_menu_item" name="Admission" parent="hospital_menu_root" sequence="4"/>
+    <menuitem name="Pending Admission" id="pending_admission_sub_menu" parent="admission_menu_item"
+              action="admission_action_window"/>
+    <menuitem name="Activate Admission" id="activate_admission_sub_menu" parent="admission_menu_item"
+              action="activate_admission_action_window"/>
+    <menuitem name="Release Admission" id="release_admission_sub_menu" parent="admission_menu_item"
+              action="release_admission_action_window"/>
+    <menuitem name="Cancel Admission" id="cancel_admission_sub_menu" parent="admission_menu_item"
+              action="cancel_admission_action_window"/>
+</odoo>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="reverse_bill_view_wizard_form" model="ir.ui.view">
+        <field name="name">Bill.Register.Wizard.Form</field>
+        <field name="model">bill.register.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Reverse Bill Wizard">
+                <!--                    <header>-->
+                <!--                        <button string="Delete Items" name="action_delete_items" type="object" class="oe_highlight"/>-->
+                <!--                    </header>-->
+                <sheet>
+                    <group string="*** Reverse Bill Form ***"><hr/>
+                        <br/>
+                        <br/>
+                        <group>
+                            <field name="date"/>
+                            <field name="bill_id"/>
+                            <field name="patient_name"/>
+                            <field name="patient_id"/>
+                        </group>
+                        <group>
+                            <field name='referred_by'/>
+                            <field name='referral'/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Investigation Item">
+                            <field name="bill_register_line_id" mode="tree">
+                                <tree string="Select Investigation Item" editable="bottom">
+                                    <field name="item_name"/>
+                                    <field name="department"/>
+                                    <field name="quantity"/>
+                                    <field name="total_price"/>
+                                    <field name="flat_discount"/>
+                                    <field name="discount_percent"/>
+                                    <field name="total_discount"/>
+                                    <field name="sub_total_amount"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <group>
+                        <group><hr/>
+                            <field name="service_charge"/><hr/>
+                        </group>
+                        <group>
+                            <hr/>
+                            <field name="total_without_discount" widget="monetary"/>
+                            <hr/>
+<!--                            <field name="discount_percent"/>-->
+<!--                            <field name="other_discount"/>-->
+                            <field name="total"/><hr/>
+                            <field name="paid"/>
+                            <hr/>
+                            <field name="due_amount"/><hr/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Update Bill Info" name="update_info" type="object" class="oe_highlight"
+                    confirm="Are You Sure This Bill Data Update!" />OR
+                    <button string="Cancel" name="cancel_action" class="btn btn-danger" type="object" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+
+    </record>
+
+    <record id="action_investigation_reverse_action" model="ir.actions.act_window">
+        <field name="name">Reverse Bills</field>
+        <field name="res_model">bill.register.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>
+

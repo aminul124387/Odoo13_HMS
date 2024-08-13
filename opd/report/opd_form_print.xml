@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <template id="opd_form">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="row mt1 mb44">
+                            <div class="col-12 text-center mt190">
+                                <h4 style="text-align:center;">
+                                    <strong>Your:
+                                        <span t-field="o.opd_id"/>
+                                    </strong>
+                                </h4>
+                            </div>
+                        </div>
+                        <!--                            <div class="row mt10">-->
+                        <!--                                <div class="col-12 text-right" t-if="o.name">-->
+                        <!--                                   <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.name, 600, 100)" style="width:300px;height:40px; margin-bottom:20px;"/>-->
+                        <!--                                </div>-->
+                        <!--                            </div>-->
+                        <div class="row mt20 mb20">
+                            <div class="col-12 text-right mb30">
+                                <strong>Date:</strong>
+                                <span t-field="o.create_date"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <strong>Patient ID:</strong>
+                                <span t-field="o.opd_name.patient_id"/>
+                            </div>
+                            <div class="col-4">
+                                <strong>Name:</strong>
+                                <span t-field="o.opd_name"/>
+                            </div>
+                            <div class="col-4">
+                                <strong>Age:</strong>
+                                <span t-field="o.opd_name.age"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <strong>Address:</strong>
+                                <span t-field="o.opd_name.address"/>
+                            </div>
+                            <div class="col-4">
+                                <strong>Sex:</strong>
+                                <span t-field="o.opd_name.gender"/>
+                            </div>
+                            <div class="col-4">
+                                <strong>Mobile:</strong>
+                                <span t-field="o.opd_name.mobile"/>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row mb64">
+                            <div class="col-8">
+                                <strong>Referred By:</strong>
+                                <span t-field="o.referred_by"/>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <span>Item Name</span>
+                                </th>
+                                <th>
+                                    <span>Department</span>
+                                </th>
+                                <th>
+                                    <span>Price</span>
+                                </th>
+                                <!--                                <th>-->
+                                <!--                                    <span>Dept</span>-->
+                                <!--                                </th>-->
+
+                                <!--    <th class="text-right"><span>Amount Paid</span></th>    -->
+                                <!--    <th class="text-right"><span>Balance</span></th>   -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="o.opd_ticket_line_id" t-as="z">
+                                <td>
+                                    <span t-field="z.ticket_item_name"/>
+                                </td>
+                                <td>
+                                    <span t-field="z.doctor_dept_name"/>
+                                </td>
+                                <td>
+                                    <span t-field="z.opd_fees"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <div class="col-6"></div>
+                    <div class="col-6 text-right float-right">
+                        <div>
+                            <h5><hr/>
+                                <strong>Total:</strong>
+                                <span t-field="o.paid"/><br/><hr/>
+                                <strong>Paid:</strong>
+                                <span t-field="o.paid"/>
+                                <hr/>
+                            </h5>
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

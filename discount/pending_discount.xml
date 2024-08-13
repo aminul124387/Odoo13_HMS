@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="pending_discount_list_view">
+        <field name="name">discount.item.list.view</field>
+        <field name="model">discount.item</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="sequence" widget="handle"/>
+                <field name="discount_id"/>
+                <field name="bill_id" widget="many2one"/>
+                <field name="admission_id" widget="many2one"/>
+                <field name="patient_name" widget="many2one"/>
+                <field name="mobile"/>
+<!--                <field name="total"/>-->
+                <field name="other_discount"/>
+                <field name="discount_percent"/>
+<!--                <field name="due_amount"/>-->
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="pending_discount_form_view">
+        <field name="name">discount.item.form.view</field>
+        <field name="model">discount.item</field>
+        <field name="arch" type="xml">
+            <form string="tree_string">
+                <header>
+                    <button string="Approved" type="object" name="action_discount_approved"/>
+                    <button string="Cancel" type="object" name="action_cancel"/>
+                    <bill_idfield name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group string="Discount Generate Form">
+                        <group>
+                            <field name="admission_id" on_change="onchange_patient_info(admission_id, context)" />
+                        </group>
+                        <group>
+                            <field name="bill_id" on_change="onchange_patient_info(bill_id, context)" widget="many2one" />
+                        </group>
+                        <group>
+                            <field name="patient_name" widget="many2one"/>
+                            <field name="mobile"/>
+                            <field name="state"/>
+                        </group>
+                        <group>
+                            <field name="discount_id"/>
+                            <field name="date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Discount Category">
+                            <field name="pending_discount_line_id" mode="tree">
+                                <tree string="Select Discount Item" editable="top" widget="section_and_note_one2many">
+                                    <control>
+                                        <create string="Add a line"/>
+                                        <create string="Add a Section" context="{'default_display_type':'line_section'}"/>
+                                        <create string="Add a note" context="{'default_display_type': 'line_note'}"/>
+                                    </control>
+                                    <field name="discount_cat_name" on_change="onchange_item(discount_cat_name, context)"/>
+                                    <field name="bank_account_name"/>
+                                    <field name="discount_cat_id"/>
+                                    <field name="other_discount"/>
+                                    <field name="discount_percent"/>
+                                    <field name="total_discount"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <group>
+                        <group>
+                            <field name="total_without_discount"/>
+<!--                            <field name="total"/>-->
+                            <field name="other_discount"/>
+                            <field name="discount_percent"/>
+<!--                            <field name="due_amount"/>-->
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <!--    Linking the menu Item code added here ===============================-->
+
+
+    <!--  This code is used for Action Window-->
+    <record model="ir.actions.act_window" id="pending_discount_action_window">
+        <field name="name">Pending Discount</field>
+        <field name="res_model">discount.item</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem name="Discount" id="discount_menu" parent="hospital_menu_root" sequence="8"/>
+    <menuitem name="Pending Discount" id="discount_info" parent="discount_menu"
+              action="pending_discount_action_window"/>
+    <menuitem name="Approved Discount" id="approved_discount_info" parent="discount_menu"
+              action="pending_discount_action_window"/>
+    <menuitem name="Cancel Discount" id="cancel_discount_info" parent="discount_menu"
+              action="pending_discount_action_window"/>
+</odoo>

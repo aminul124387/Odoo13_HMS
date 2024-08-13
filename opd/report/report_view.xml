@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+        <report id="report_opd_action_form"
+        string="Admission"
+        model="opd.info"
+        report_type="qweb-pdf"
+        file="general_hospital_v_03.opd_form"
+        name="general_hospital_v_03.opd_form"/>
+
+</odoo>

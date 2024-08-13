@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="patient_card_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="oe_structure"/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <t t-foreach="o" t-as="patient">
+                            <br/>
+                            <br/>
+                            <br/>
+                            <table width="40%" height="30%" style="border: 3px solid black;">
+                                <tr>
+                                    <td width="100%" align="center" height="30" style="font-size:30px; color:green;">
+                                        <strong>Patient ID: </strong>
+                                        <strong>
+                                            <span t-field="o.patient_id"/>
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td height="10px"/>
+                                </tr>
+                                <tr>
+                                    <td align="center"
+                                        style="width: 150px; height: 150px; border: 1px solid Silver; border-radius: 50%; overflow: hidden;">
+                                        <div style="border: 3px solid black; border-radius: 50%; height: 100%; width: 50%; overflow: hidden;">
+                                            <img t-if="o.photo"
+                                                 t-att-src="'data:image/png;base64,%s' % to_text(o.photo)"
+                                                 style="height: 100%; width: 100%; object-fit: cover;"/>
+                                            <span t-if="not o.photo">No photo available</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td height="10px"/>
+                                </tr>
+                                <tr>
+                                    <td align="center" height="30px" style="font-size:30px; color:green;">
+                                        <strong>
+                                            <span t-field="o.name"/>
+                                        </strong>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td height="20px"/>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <table width="100%">
+                                            <tr>
+                                                <td style="font-family: 'Helvetica';padding-left:20px;">
+                                                    <strong>Patient ID.</strong>
+                                                </td>
+                                                <td>
+                                                    <strong>: </strong>
+                                                </td>
+                                                <td>
+                                                    <span t-field="o.patient_id"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-family: 'Helvetica';padding-left:20px;">
+                                                    <strong>Age</strong>
+                                                </td>
+                                                <td>
+                                                    <strong>: </strong>
+                                                </td>
+                                                <td>
+                                                    <span t-field="o.age"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-family: 'Helvetica';padding-left:20px;">
+                                                    <strong>Address</strong>
+                                                </td>
+                                                <td>
+                                                    <strong>: </strong>
+                                                </td>
+                                                <td>
+                                                    <span t-field="o.address"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-family: 'Helvetica';padding-left:20px;">
+                                                    <strong>Sex</strong>
+                                                </td>
+                                                <td>
+                                                    <strong>: </strong>
+                                                </td>
+                                                <td>
+                                                    <span t-field="o.gender"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-family: 'Helvetica';padding-left:20px;">
+                                                    <strong>Mobile</strong>
+                                                </td>
+                                                <td>
+                                                    <strong>: </strong>
+                                                </td>
+                                                <td>
+                                                    <span t-field="o.mobile"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-family: 'Helvetica';padding-left:20px;">
+                                                    <strong>Family physician</strong>
+                                                </td>
+                                                <td>
+                                                    <strong>: </strong>
+                                                </td>
+                                                `
+                                                <td>
+                                                    <span t-field="o.family_physician.name"/>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td style="font-family: 'Helvetica';padding-left:20px;">
+                                                    <strong>Created By</strong>
+                                                </td>
+                                                <td>
+                                                    <strong>: </strong>
+                                                </td>
+                                                <td>
+                                                    <span t-field="o.user_id.name"/>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                        <div>
+                                            <t t-if="o.name">
+                                                <img t-att-src="'/report/barcode/?type=EAN13&amp;value=%s&amp;height=900&amp;width=600' % o.name"
+                                                     alt="Barcode"/>
+                                            </t>
+                                            <t t-if="not o.name">
+                                                <span>No barcode available</span>
+                                            </t>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

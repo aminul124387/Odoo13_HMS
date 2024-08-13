@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record model="ir.ui.view" id="opd_list_view">
+        <field name="name">opd.list.view</field>
+        <field name="model">opd.info</field>
+        <field name="arch" type="xml">
+            <tree
+                decoration-success="state=='confirmed'"
+                decoration-danger="state=='cancelled'"
+                decoration-primary="state=='pending'"
+            >
+                <field name="opd_id"/>
+                <field name="patient_id"/>
+                <field name="opd_name"/>
+                <field name="receipt_id"/>
+                <field name="age"/>
+                <field name="gender"/>
+                <field name="mobile"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="opd_form_view">
+        <field name="name">opd.form.view</field>
+        <field name="model">opd.info</field>
+        <field name="arch" type="xml">
+            <form string="tree_string">
+                <header>
+                    <button string="Confirm and Print" type="object" name="customer_confirm"/>
+                    <button string="Cancel" type="object" name="customer_cancel"/>
+                    <button string="Print Ticket" type="object" name="print_report"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Created" bg_color="bg-warning" attrs="{'invisible': [('state', '!=', 'created')]}"/>
+                    <widget name="web_ribbon" title="Confirmed" bg_color="bg-success" attrs="{'invisible': [('state', '!=', 'confirmed')]}"/>
+                    <widget name="web_ribbon" title="Cancel" bg_color="bg-danger" attrs="{'invisible': [('state', '!=', 'cancelled')]}"/>
+                    <group>
+                        <group>
+                            <field name="date"/>
+                            <field name="opd_id"/>
+                            <field name="patient_id"/>
+                            <field name="opd_name"/>
+                            <field name="address"/>
+                            <field name="age"/>
+                            <field name="gender"/>
+                            <field name="mobile"/>
+                            <field name="referred_by"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="OPD Details">
+                            <field name="opd_ticket_line_id" mode="tree">
+                                <tree string="Select OPD Ticket Item" editable="top">
+                                    <field name="ticket_item_name"/>
+                                    <field name="doctor_dept_name"/>
+                                    <field name="opd_fees"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <group>
+                        <group>
+                            <field name="payment_type"/>
+                            <field name="ac_no" attrs="{'invisible': [('payment_type', '!=', 'card')]}" placeholder='Select Account'/>
+                            <field name="psn"
+                                   attrs="{'invisible': [('payment_type', '!=', 'm_cash')]}" placeholder='Select Mobile Payment Type'/>
+                            <field name="mcash_mobile_no_payment"
+                                   attrs="{'invisible': [('payment_type', '!=', 'm_cash')]}" placeholder='Enter Last 4 Digit'/>
+                            <field name="card_no_payment" attrs="{'invisible': [('payment_type', '!=', 'card')]}" placeholder='Enter Last 4 Digit'/>
+                        </group>
+                        <group>
+                            <field name="paid"/>
+<!--                            <field name="paid_amount"/>-->
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--    Linking the menu Item code added here ===============================-->
+
+
+    <!--  This code is used for Action Window-->
+    <record model="ir.actions.act_window" id="opd_action_window">
+        <field name="name">OPD</field>
+        <field name="res_model">opd.info</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem id="opd_menu_item" name="OPD" parent="hospital_menu_root" sequence="2"/>
+    <menuitem name="OPD Ticket" id="hospital_menu_2_list6" parent="opd_menu_item"
+              action="opd_action_window"/>
+
+
+
+</odoo>

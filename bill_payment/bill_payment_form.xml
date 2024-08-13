@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="bill_pay_list_view">
+        <field name="name">bill.bill_pay.list.view</field>
+        <field name="model">bill.bill_pay</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="admission_id" widget="many2one"/>
+                <field name="bill_id" widget="many2one"/>
+                <field name="amount"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="bill_pay_form_view">
+        <field name="name">bill.bill_pay.form.view</field>
+        <field name="model">bill.bill_pay</field>
+        <field name="arch" type="xml">
+            <form string="tree_string">
+                <!--                <header>-->
+                <!--                    <button string="Confirm and Print" type="object" name="customer_confirm"/>-->
+                <!--                    <button string="Add Test" type="object" name="add_test"/>-->
+                <!--                    <button string="Add Discount" type="object" name="add_discpunt"/>-->
+                <!--                    <button string="Final Settlement" type="object" name="customer_settlement"/>-->
+                <!--                    <button string="bill_pay" type="object" name="customer_bill_pay"/>-->
+                <!--                    <button string="Cancel" type="object" name="customer_cancel"/>-->
+                <!--                    <field name="state" widget="statusbar"/>-->
+                <!--                </header>-->
+                <sheet>
+                    <group string="Bill Payment Form">
+<group>
+<!--                                <field name="service_charge" placeholder="Input Admission Service Charge"/>-->
+                                <field name="payment_type"/>
+                                <field name="cash_paid"
+                                       attrs="{'invisible': [('payment_type', '!=', 'cash'),
+                               ('payment_type', '!=', 'card_cash'),
+                               ('payment_type', '!=', 'm_cash_cash'),
+                               ('payment_type', '!=', 'card_cash_mcash')
+                               ]}"
+                                       placeholder='Enter Cash Amount'/>
+
+                                <field name="psn"
+                                       attrs="{'invisible': [('payment_type', '!=', 'm_cash'),
+                                   ('payment_type', '!=', 'm_cash_cash'),
+                                   ('payment_type', '!=', 'm_cash_card'),
+                                   ('payment_type', '!=', 'card_cash_mcash')
+                                   ]}"
+                                       placeholder='Select Mobile Payment Type'/>
+                                <field name="mcash_mobile_no_payment"
+                                       attrs="{'invisible': [('payment_type', '!=', 'm_cash'),
+                                   ('payment_type', '!=', 'm_cash_cash'),
+                                   ('payment_type', '!=', 'm_cash_card'),
+                                   ('payment_type', '!=', 'card_cash_mcash')
+
+                                   ]}"
+                                       placeholder='Enter Last 4 Digit'/>
+                                <field name="mfs_paid"
+                                       attrs="{'invisible': [('payment_type', '!=', 'm_cash'),
+                                   ('payment_type', '!=', 'm_cash_cash'),
+                                   ('payment_type', '!=', 'm_cash_card'),
+                                   ('payment_type', '!=', 'card_cash_mcash')
+                                   ]}"
+                                       placeholder='Enter MFS Amount'/>
+                                <field name="ac_no" attrs="{'invisible': [
+                                ('payment_type', '!=', 'card'),
+                                ('payment_type', '!=', 'card_cash'),
+                                ('payment_type', '!=', 'm_cash_card'),
+                                ('payment_type', '!=', 'card_cash_mcash')
+
+
+                            ]}"
+                                       placeholder='Select Account'/>
+                                <field name="card_no_payment" attrs="{'invisible': [
+                            ('payment_type', '!=', 'card'),
+                            ('payment_type', '!=', 'card_cash'),
+                            ('payment_type', '!=', 'm_cash_card'),
+                            ('payment_type', '!=', 'card_cash_mcash')
+
+                            ]}"
+                                       placeholder='Enter Last 4 Digit'/>
+
+
+                                <field name="card_paid"
+                                       attrs="{'invisible': [('payment_type', '!=', 'card'),
+                                   ('payment_type', '!=', 'card_cash'),
+                                   ('payment_type', '!=', 'm_cash_card'),
+                                   ('payment_type', '!=', 'card_cash_mcash')
+
+                                   ]}"
+                                       placeholder='Enter Card Amount'/>
+
+                            </group>
+                        <group>
+                            <field name="date"/>
+                            <field name="admission_id" widget="many2one"/>
+                            <field name="bill_id" widget="many2one"/>
+                            <field name="total" readonly="1" attrs="{'invisible': [('total', '=', 0)]}"/>
+                            <field name="due_amount" readonly="1" attrs="{'invisible': [('due_amount', '=', 0)]}"/>
+                            <field name="amount"/>
+                        </group>
+                    </group>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <footer>
+                        <button name="action_pay" type="object" string="Pay" class="btn-danger"/>
+                        or
+                        <button string="Cancel" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <!--    Linking the menu Item code added here ===============================-->
+
+
+    <!--  This code is used for Action Window-->
+    <record model="ir.actions.act_window" id="bill_pay_action_window">
+        <field name="name">Bill Payment</field>
+        <field name="res_model">bill.bill_pay</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+        <menuitem id="payment_menu_item4" name="Payment" parent="hospital_menu_root"/>
+    <menuitem name="Bill Payment" id="hospital_menu_bill_payment_list" parent="payment_menu_item4"
+              action="bill_pay_action_window"/>
+    <!--    <menuitem name="Bill Payment" id="hospital_menu_bill_payment_list" parent="hospital_menu_root"-->
+    <!--              action="bill_pay_item_action_window"/>-->
+</odoo>

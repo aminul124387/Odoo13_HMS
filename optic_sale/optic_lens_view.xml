@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="lens_form_view">
+            <field name="name">optic.lens.form</field>
+            <field name="model">optic.lens</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Lens">
+                    <sheet>
+                        <group string="Lens Info">
+                            <field name="lens_code"/>
+                            <field name="lens_name"/>
+                            <field name="purchase_price"/>
+                            <field name="sell_price"/>
+                            <field name="lens_type"/>
+                            <field name="supplier"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="lens_tree_view">
+            <field name="name">optic.lens.tree</field>
+            <field name="model">optic.lens</field>
+            <field name="arch" type="xml">
+                <tree string="Admission List" default_order='id desc'>
+                    <field name="lens_code"/>
+                    <field name="lens_name"/>
+                    <field name="purchase_price"/>
+                    <field name="sell_price"/>
+                    <field name="lens_type"/>
+                    <field name="supplier"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="lens_action">
+            <field name="name">Lens Info</field>
+            <field name="res_model">optic.lens</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="optics_menu" name="Optics" parent="hospital_menu_root" sequence="7"/>
+        <menuitem name="Lens Sale Details" id="lens_sale_menu" parent="optics_menu" action="lens_action"/>
+    </data>
+</odoo>

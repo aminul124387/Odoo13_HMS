@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="ambulance_booking_view" model="ir.ui.view">
+            <field name="name">Ambulance Booking</field>
+            <field name="model">ambulance.booking</field>
+            <field name="arch" type="xml">
+                <form string="Ambulance Booking">
+                    <sheet>
+                        <group string="Ambulance Booking" col="4">
+                            <field name="date"/>
+                            <field name="booking_type"/>
+                            <field name="customer_name"/>
+                            <field name="patient_name"/>
+                            <field name="mobile"/>
+                            <field name="req_date"/>
+                            <field name="start_from"/>
+                            <field name="destination"/>
+                            <field name="ambulance_id"/>
+                            <field name="amount"/>
+                            <field name="advance_amount"/>
+                            <field name="paid_amount"/>
+                            <field name="unpaid_amount"/>
+                            <field name="grace_time"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="ambulance_booking_action" model="ir.actions.act_window">
+            <field name="name">Ambulance Booking</field>
+            <field name="res_model">ambulance.booking</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record model="ir.ui.view" id="ambulance_booking_tree">
+            <field name="name">Ambulance Booking</field>
+            <field name="model">ambulance.booking</field>
+            <field name="arch" type="xml">
+                <tree string="Ambulance Booking List">
+                    <field name="date"/>
+                    <field name="booking_type"/>
+                    <field name="customer_name"/>
+                    <field name="patient_name"/>
+                    <field name="mobile"/>
+                    <field name="req_date"/>
+                    <field name="start_from"/>
+                    <field name="destination"/>
+                    <field name="ambulance_id"/>
+                    <field name="amount"/>
+                    <field name="advance_amount"/>
+                    <field name="paid_amount"/>
+                    <field name="unpaid_amount"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <menuitem name="Ambulance" id="ambulance_menu" parent="hospital_menu_root" sequence="15"/>
+        <menuitem name="Ambulance Booking" id="ambulance_booking_menu" parent="ambulance_menu"
+                  action="ambulance_booking_action"/>
+
+    </data>
+</odoo>

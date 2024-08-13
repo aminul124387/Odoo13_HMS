@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="bed_cabin_item_form_view">
+            <field name="name">bed.cabin.form</field>
+            <field name="model">bed.cabin</field>
+            <field name="arch" type="xml">
+                <form string="Bed/Cabin Information">
+                    <header>
+                        <button string="Confirm" type="object" name="customer_confirm"/>
+                        <button string="Cancel" type="object" name="customer_cancel"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group string="Bed/Cabin Information">
+                            <group>
+                                <field name="bed_cabin_no"/>
+                                <field name="ward_name"/>
+                                <field name="patient_name"/>
+                            </group>
+                            <group>
+                                <field name="bed_product"/>
+                                <field name="price"/>
+                                <field name="type"/>
+                            </group>
+                            <group>
+                                <field name="telephone"/>
+                                <field name="department"/>
+                                <field name="invoice_policy"/>
+                            </group>
+                            <group>
+                                <field name="floor_number"/>
+                                <field name="state"/>
+                                <field name="air_condition"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Facilities">
+<!--                                <field name="package_line_id" mode="tree">-->
+<!--                                    <tree string="Select Admission Item" editable="top">-->
+<!--                                        <field name="item_name"/>-->
+<!--                                        <field name="department"/>-->
+<!--                                        <field name="price"/>-->
+<!--                                        <field name="total_amount"/>-->
+<!--                                    </tree>-->
+<!--                                </field>-->
+                            </page>
+                        </notebook>
+                        <group>
+                            <group string="Add Here Another Value">
+                                <!--                            <field name="total"/>-->
+                                <!--                            <field name="discount_percent"/>-->
+                                <!--                            <field name="grand_total"/>-->
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="bed_cabin_item_tree_view">
+            <field name="name">bed.cabin.tree</field>
+            <field name="model">bed.cabin</field>
+            <field name="arch" type="xml">
+                <tree string="Bed/Cabin Item List"
+                decoration-success="state=='confirmed'"
+                decoration-danger="state=='cancelled'"
+                decoration-primary="state=='created'"
+                >
+                    <field name="bed_cabin_id"/>
+                    <field name="bed_cabin_no"/>
+                    <field name="ward_name"/>
+                    <field name="patient_name"/>
+                    <field name="bed_product"/>
+                    <field name="price"/>
+                    <field name="floor_number"/>
+                    <field name="invoice_policy"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="bed_cabin_item_action">
+            <field name="name">Bed/Cabin Item</field>
+            <field name="res_model">bed.cabin</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+<!--        <menuitem id="ward_management_menu" name="Ward" parent="hospital_menu_root"-->
+<!--                  action="ward_management_action"/>-->
+
+        <menuitem name="Bed/Cabin Management" id="bed_cabin_sub_menu_item" parent="ward_menu_sub_item" action="bed_cabin_item_action" sequence="02"/>
+    </data>
+</odoo>

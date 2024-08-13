@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="hospital_list_view">
+        <field name="name">Package.list.view</field>
+        <field name="model">package.info</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="package_id"/>
+                <field name="package_name"/>
+                <field name="package_cate"/>
+                <field name="total"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="hospital_form_view">
+        <field name="name">hospital.form.view</field>
+        <field name="model">package.info</field>
+        <field name="arch" type="xml">
+            <form string="tree_string">
+                <header>
+                    <button string="Confirm" type="object" name="customer_confirm"/>
+                    <button string="Cancel" type="object" name="customer_cancel"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group string="Package Information">
+                        <group>
+                            <field name="package_id"/>
+                            <field name="package_name"/>
+                        </group>
+                        <group>
+                            <field name="investigation_package"/>
+                        </group>
+                        <group>
+                            <field name="admission_package"/>
+                        </group>
+                        <group>
+                            <field name="package_cate"/>
+                            <field name="state"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Admission Details">
+                            <field name="package_line_id" mode="tree">
+                                <tree string="Select Admission Item" editable="top">
+                                   <field name="item_name" on_change="onchange_item(item_name, context)"/>
+                                    <field name="department"/>
+                                    <field name="quantity"/>
+                                    <field name="total_price"/>
+                                    <field name="discount_percent"/>
+                                    <field name="total_discount"/>
+                                    <field name="sub_total_amount"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+<!--                    <group>-->
+<!--                        <group>-->
+<!--                            <field name="total_without_discount"/>-->
+<!--                            <field name="discount_percent"/>-->
+<!--                            <field name="other_discount"/>-->
+<!--                            <field name="total"/>-->
+<!--                        </group>-->
+<!--                    </group>-->
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="package_action_window">
+        <field name="name">package</field>
+        <field name="res_model">package.info</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="General Hospital" id="hospital_menu_root"/>
+    <menuitem name="Add package" id="package_info_sub_menu" parent="configure_menu"
+              action="package_action_window"/>
+</odoo>

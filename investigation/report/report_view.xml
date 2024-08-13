@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+        <report id="report_investigation_form"
+        string="Investigation"
+        model="bill.register"
+        report_type="qweb-pdf"
+        file="general_hospital_v_03.investigation_form"
+        name="general_hospital_v_03.investigation_form"/>
+
+        <report id="report_invoice_action"
+        string="Invoice"
+        model="bill.register"
+        report_type="qweb-pdf"
+        file="general_hospital_v_03.invoice_form"
+        name="general_hospital_v_03.invoice_form"/>
+
+</odoo>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="opd_item_list_view">
+        <field name="name">opd.item.List.View</field>
+        <field name="model">opd.item</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="opd_item_id"/>
+                <field name="ticket_item_name"/>
+                <field name="doctor_dept_name"/>
+                <field name="opd_fees"/>
+                <field name="account_id"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="opd_item_form_view">
+        <field name="name">opd.item.Form.View</field>
+        <field name="model">opd.item</field>
+        <field name="arch" type="xml">
+            <form string="tree_string">
+                <header>
+                    <button string="Confirm" type="object" name="action_confirm" class="oe_highlight"/>
+                    <button string="Cancel" type="object" name="action_cancel"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+
+                    <group string="OPD Item Form">
+                        <group>
+                            <field name="opd_item_id"/>
+                            <field name="ticket_item_name"/>
+                            <field name="doctor_dept_name"/>
+                            <field name="opd_fees"/>
+                            <field name="account_id"/>
+                            <field name="state"/>
+                        </group>
+                    </group>
+<!--                    <footer>-->
+<!--                        <button name="btn_success" type="object" string="Pay" class="btn-danger"/> or <button string="Cancel" special="cancel"/>-->
+<!--                    </footer>-->
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--    Linking the menu Item code added here ===============================-->
+
+    <record model="ir.ui.view" id="opd_item_list_search">
+        <field name="name">Opd.List.Search</field>
+        <field name="model">opd.item</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="opd_item_id"/>
+            </search>
+        </field>
+    </record>
+    <!--  This code is used for Action Window-->
+    <record model="ir.actions.act_window" id="opd_item_action_window">
+        <field name="name">OPD Item</field>
+        <field name="res_model">opd.item</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="opd_menu_item" name="OPD" parent="hospital_menu_root" sequence="2"/>
+    <menuitem name="OPD Item Entry" id="opd_item_sub_menu_list" parent="opd_menu_item" action="opd_item_action_window"/>
+
+</odoo>

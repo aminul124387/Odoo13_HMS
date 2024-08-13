@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="appointment_payment_list_view">
+        <field name="name">Appointment.Payment.List.View</field>
+        <field name="model">appointment.payment</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="app_payment_id"/>
+                <field name="calculate_start_date"/>
+                <field name="calculate_end_date"/>
+                <field name="doctor_name"/>
+                <field name="total_payable_amount"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="appointment_payment_form_view">
+        <field name="name">appointment.payment.Form.View</field>
+        <field name="model">appointment.payment</field>
+        <field name="arch" type="xml">
+            <form string="tree_string">
+                <header>
+                    <button string="Pay" type="object" name="action_pay" class="oe_highlight"/>
+                    <button string="Cancel" type="object" name="action_cancel"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group string="Appointment Paid Form">
+                        <group>
+                            <field name="app_payment_id"/>
+                            <field name="calculate_start_date"/>
+                            <field name="calculate_end_date"/>
+                            <field name="doctor_name"/>
+                            <field name="total_payable_amount"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Appointment Payment Info">
+                            <field name="appointment_payment_line_id" mode="tree">
+                                <tree string="Appointment Payment" editable="bottom">
+                                    <field name="patient_name"/>
+                                    <field name="app_id"/>
+                                    <field name="patient_status"/>
+                                    <field name="date"/>
+                                    <field name="amount"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--    Linking the menu Item code added here ===============================-->
+
+    <record model="ir.ui.view" id="appointment_payment_list_search">
+        <field name="name">Appointment.List.Search</field>
+        <field name="model">appointment.payment</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="app_payment_id"/>
+                <field name="calculate_start_date"/>
+                <field name="calculate_end_date"/>
+                <field name="doctor_name"/>
+            </search>
+        </field>
+    </record>
+    <!--  This code is used for Action Window-->
+    <record model="ir.actions.act_window" id="appointment_payment_action_window">
+        <field name="name">Appointment Payment</field>
+        <field name="res_model">appointment.payment</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem name="Appointment Payment" id="appointment_payment_sub_menu" parent="appointment_booking_menu_item"
+              action="appointment_payment_action_window" sequence="3"/>
+
+</odoo>

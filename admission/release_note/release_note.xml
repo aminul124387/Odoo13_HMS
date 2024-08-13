@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+<!--    <record model="ir.ui.view" id="release_note_list_view">-->
+<!--        <field name="name">Release.Note.list.view</field>-->
+<!--        <field name="model">release.note</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <tree>-->
+<!--                <field name="release_note"/>-->
+<!--            </tree>-->
+<!--        </field>-->
+<!--    </record>-->
+
+
+    <record model="ir.ui.view" id="release_note_popup_view_form">
+        <field name="name">release.note.form.view</field>
+        <field name="model">release.note</field>
+        <field name="arch" type="xml">
+            <form string="tree_string">
+                <sheet>
+                    <group string="Release Note Form">
+                        <group>
+                            <field name="release_note_date"/>
+                            <field name="release_note_make_by"/>
+                            <field name="released_by"/>
+                            <field name="admission_id"/>
+                        </group>
+                       <group>
+                           <field name="release_note"/><hr/>
+                           <field name="diagnosis" widget="many2many_tags"/>
+                            <field name="treatment"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="release_note_update_info" type="object" class="btn btn-info">Update Info</button>
+                    <button name="cancel" special="cancel" type="object" class="btn btn-danger">Cancel</button>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+    <!--    Linking the menu Item code added here ===============================-->
+
+
+    <!--  This code is used for Action Window-->
+    <record model="ir.actions.act_window" id="release_note_action_window">
+        <field name="name">Release Note</field>
+        <field name="res_model">release.note</field>
+        <field name="view_mode">form</field>
+    </record>
+
+
+<!--    <menuitem name="Release Note" id="release_note_menu" parent="report_menu"-->
+<!--              action="release_note_action_window"/>-->
+</odoo>

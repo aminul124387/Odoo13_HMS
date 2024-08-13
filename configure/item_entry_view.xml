@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="hospital_item_tree_view">
+        <field name="name">Item.Entry.List.View</field>
+        <field name="model">item.entry</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="item_name"/>
+                <field name="department"/>
+                <field name="price"/>
+                <field name="has_service_charge"/>
+                <field name="discount"/>
+                <field name="discount_percent"/>
+                <field name="total_amount"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="hospital_item_form_views">
+        <field name="name">Item.Entry.Form.View</field>
+        <field name="model">item.entry</field>
+        <field name="arch" type="xml">
+            <form string="tree_string">
+                <header>
+                    <button string="Confirmed" type="object" name="item_confirmed"/>
+                    <button string="Cancel" type="object" name="item_cancel"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group string="Item Entry Form">
+                            <group>
+                                <field name="item_name"/>
+                                <field name="department"/>
+                                <field name="price"/>
+                                <field name="has_service_charge"/>
+                                <field name="more_than_one_days"/>
+                                <field name="has_auto_select_admission"/>
+                                <field name="base_rate"/>
+                                <field name="sample_required_date"/>
+                                <field name="sample_required"/>
+                                <field name="individual"/>
+                            </group>
+                            <group>
+                                <field name="manual"/>
+                                <field name="merge"/>
+                                <field name="dependency"/>
+                                <field name="no_lab_required"/>
+                                <field name="indoor_item"/>
+                                <field name="sample_type"/>
+                            </group>
+                        </group>
+                    <notebook>
+                        <page string="Reference Value">
+                            <field name="item_entry_line_id" mode="tree">
+                                <tree string="Select Hospital Item" editable="top">
+                                    <field name="name"/>
+                                    <field name="reference_value"/>
+                                    <field name="bold"/>
+                                    <field name="group_by"/>
+                                    <field name="others"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Merge Value">
+                            <field name="item_entry_merge_line_id" mode="tree">
+                                <tree string="Select Hospital Item" editable="top">
+                                    <field name="name"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <!--    Linking the menu Item code added here ===============================-->
+
+
+    <!--  This code is used for Action Window-->
+    <record model="ir.actions.act_window" id="hospital_items_actions_window">
+        <field name="name">Hospital Item</field>
+        <field name="res_model">item.entry</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+<!--    <menuitem id="admission_menu_item3" name="Item Info" parent="hospital_menu_root"/>-->
+    <menuitem name="Item Entry" id="hospital_menu_item_list" parent="configure_menu"
+              action="hospital_items_actions_window"/>
+</odoo>
+
+

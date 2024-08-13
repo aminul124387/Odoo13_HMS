@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record model="ir.ui.view" id="inventory_list_view">
+        <field name="name">inventory.list.view</field>
+        <field name="model">inventory.info</field>
+        <field name="arch" type="xml">
+            <tree
+                    decoration-success="state=='confirmed'"
+                    decoration-info="state=='validate'"
+                    decoration-danger="state=='cancelled'"
+                    decoration-primary="state=='draft'"
+            >
+                <field name="ipe"/>
+                <field name="ref"/>
+                <field name="partner_id"/>
+                <field name="invoice_no"/>
+                <field name="warehouse"/>
+                <field name="department"/>
+                <field name="total"/>
+                <field name="state"/>
+<!--                <field name="date"/>-->
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="inventory_form_view">
+        <field name="name">inventory.form.view</field>
+        <field name="model">inventory.info</field>
+        <field name="arch" type="xml">
+            <form string="tree_string">
+                <header>
+                    <button string="Product Receive" type="object" name="inventory_product_receive"/>
+                    <button string="Cancel" type="object" name="inventory_cancel"/>
+                    <button string="Verify for Adjustment" type="object" name="inventory_validation"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Pending" bg_color="bg-warning"
+                            attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                    <widget name="web_ribbon" title="Confirmed" bg_color="bg-success"
+                            attrs="{'invisible': [('state', '!=', 'confirmed')]}"/>
+                    <widget name="web_ribbon" title="Validate" bg_color="bg-success"
+                            attrs="{'invisible': [('state', '!=', 'validate')]}"/>
+                    <widget name="web_ribbon" title="Cancel" bg_color="bg-danger"
+                            attrs="{'invisible': [('state', '!=', 'cancelled')]}"/>
+                    <group>
+                        <group>
+                            <field name="ipe"/>
+                            <field name="ref"/>
+                            <field name="partner_id"/>
+                            <field name="invoice_no"/>
+                            <field name="warehouse"/>
+                            <field name="department"/>
+                            <field name="total"/>
+                            <field name="state"/>
+                            <field name="date"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Inventory Details">
+                            <field name="inventory_line_id" mode="tree">
+                                <tree string="Inventory Item Details" editable="top">
+                                    <field name="product_name"/>
+                                    <field name="account"/>
+                                    <field name="quantity"/>
+                                    <field name="unit_price"/>
+                                    <field name="total_price"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--    Linking the menu Item code added here ===============================-->
+
+
+    <!--  This code is used for Action Window-->
+    <record model="ir.actions.act_window" id="inventory_draft_action_window">
+        <field name="name">Inventory</field>
+        <field name="res_model">inventory.info</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('state', '=', 'draft')]</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="inventory_confirmed_action_window">
+        <field name="name">Confirmed Inventory</field>
+        <field name="res_model">inventory.info</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('state', '=', 'confirmed')]</field>
+    </record>
+    <record model="ir.actions.act_window" id="inventory_validate_action_window">
+        <field name="name">Validate Inventory</field>
+        <field name="res_model">admission.info</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('state', '=', 'validate')]</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="inventory_cancel_action_window">
+        <field name="name">Cancel Inventory</field>
+        <field name="res_model">inventory.info</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[('state', '=', 'cancelled')]</field>
+    </record>
+
+
+    <menuitem id="inventory_menu_items" name="Inventory Management" parent="hospital_menu_root"/>
+    <menuitem name="Pending Inventory" id="hospital_inventory_pending" parent="inventory_menu_items"
+              action="inventory_confirmed_action_window"/>
+    <menuitem name="Confirmed Inventory" id="hospital_inventory_confirmed" parent="inventory_menu_items"
+              action="inventory_confirmed_action_window"/>
+    <menuitem name="Validate Inventory" id="hospital_inventory_validate" parent="inventory_menu_items"
+              action="inventory_validate_action_window"/>
+    <menuitem name="Cancel Inventory" id="hospital_inventory_validate" parent="inventory_menu_items"
+              action="inventory_cancel_action_window"/>
+
+
+</odoo>

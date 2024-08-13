@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="appointment_booking_list_view">
+        <field name="name">appointment.booking.List.View</field>
+        <field name="model">appointment.booking</field>
+        <field name="arch" type="xml">
+            <tree
+            decoration-success="state=='reached'"
+            decoration-danger="state=='cancelled'"
+            decoration-primary="state=='done'"
+            decoration-warning="state=='pending'"
+            >
+                <field name="app_id"/>
+<!--                <field name="patient_id"/>-->
+                <field name="patient_name"/>
+                <field name="doctor_id"/>
+                <field name="app_datetime"/>
+                <field name="patient_status"/>
+                <field name="invoice"/>
+                <field name="amount"/>
+                <field name="state" widget="badge"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="appointment_booking_form_view">
+        <field name="name">appointment.booking.Form.View</field>
+        <field name="model">appointment.booking</field>
+        <field name="arch" type="xml">
+            <form string="tree_string">
+                <header>
+                    <button string="Print Report" type="object" class="btn btn-primary"/>
+                    <button string="Create Invoice" type="object" name="create_invoice" class="btn-success"/>
+                    <button string="Reached" type="object" name="action_reach" class="oe_highlight"/>
+                    <button string="Done" type="object" name="action_done" class="oe_highlight"/>
+                    <button string="Cancel" type="object" name="cancel_appointment_show_btn" class="btn btn-default"/>
+                    <field name="state" widget="statusbar" class="oe_highlight"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Pending" bg_color="bg-warning" attrs="{'invisible': [('state', '!=', 'pending')]}"/>
+                    <widget name="web_ribbon" title="Reached" bg_color="bg-success" attrs="{'invisible': [('state', '!=', 'reached')]}"/>
+                    <widget name="web_ribbon" title="Done" bg_color="bg-success" attrs="{'invisible': [('state', '!=', 'done')]}"/>
+                    <widget name="web_ribbon" title="Cancel" bg_color="bg-danger" attrs="{'invisible': [('state', '!=', 'cancelled')]}"/>
+                    <group string="Appointment Booking Form">
+                        <group>
+                            <field name="app_id"/>
+<!--                            <field name="patient_id"/>-->
+                            <field name="patient_name" on_change="onchange_patient(patient_name)"/>
+                            <field name="patient_status"/>
+                            <field name="age"/>
+                            <field name="gender"/>
+                            <field name="mobile"/>
+                            <field name="address"/>
+                            <field name="booking_date"/>
+                        </group>
+                        <group>
+                            <field name="reference"/>
+                            <field name="doctor_id"/>
+                            <field name="app_datetime"/>
+                            <field name="duration"/>
+                            <field name="urgency_level"/>
+                            <field name="amount"/>
+                            <field name="invoice"/>
+                            <field name="state"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Pharmacy Medicine">
+                            <field name="pharmacy_medicine_line_ids" mode="tree">
+                                <tree string="Select Medicine Item" editable="bottom">
+                                    <field name="sl_no" style="text-align:center; width:20px;" />
+                                    <field name="product"/>
+                                    <field name="price"/>
+                                    <field name="quantity"/>
+                                    <field name="sub_total"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Prescriptions">
+                            <field name="prescriptions">
+<!--                                <group>-->
+<!--                                    <field name="description"/>-->
+<!--                                </group>-->
+                            </field>
+                        </page>
+                        <page string="Evaluation">
+                            <field name="prescriptions">
+<!--                                <group>-->
+<!--                                    <field name="description"/>-->
+<!--                                </group>-->
+                            </field>
+                        </page>
+                        <page string="Medical History">
+                            <group string="Past Medical Illness">
+                                <group>
+                                    <field name="hbv_infection"/>
+                                </group>
+                                <group>
+                                    <field name="remarks"/>
+                                </group>
+                                <group>
+                                    <field name="hbv_infection"/>
+                                </group>
+                                <group>
+                                    <field name="remarks"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                    <field name="message_ids" widget="mail_thread"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <!--    Linking the menu Item code added here ===============================-->
+
+    <record model="ir.ui.view" id="appointment_booking_list_search">
+        <field name="name">Appointment.List.Search</field>
+        <field name="model">appointment.booking</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="app_id"/>
+<!--                <field name="patient_id"/>-->
+                <field name="doctor_id"/>
+            </search>
+        </field>
+    </record>
+    <!--  This code is used for Action Window-->
+    <record model="ir.actions.act_window" id="appointment_booking_action_window">
+        <field name="name">Appointments</field>
+        <field name="res_model">appointment.booking</field>
+        <field name="view_mode">tree,form</field>
+<!--        <field name="domain">[('state', '=', 'reached')]</field>-->
+    </record>
+
+
+
+   <menuitem id="appointment_booking_menu_item" name="Appointment" parent="hospital_menu_root" sequence="5"/>
+    <menuitem name="Appointment Booking" id="appointment_booking_sub_menu" parent="appointment_booking_menu_item"
+              action="appointment_booking_action_window" sequence="1" />
+<!--    <menuitem name="Create Appointment" id="create_appointmen_menu" parent="appointment_booking_menu_item"-->
+<!--              action="create_appointment_wizard" sequence="5"/>-->
+
+</odoo>

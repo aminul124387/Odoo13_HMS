@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <template id="money_receipt_form">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="row mt1 mb44">
+                            <div class="col-12 text-center mt190">
+                                <h4 style="text-align:center;">
+                                    <strong>Money Receipt:
+                                        <span t-field="o.name"/>
+                                    </strong>
+                                </h4>
+                            </div>
+                        </div>
+                        <!--                            <div class="row mt10">-->
+                        <!--                                <div class="col-12 text-right" t-if="o.name">-->
+                        <!--                                   <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.name, 600, 100)" style="width:300px;height:40px; margin-bottom:20px;"/>-->
+                        <!--                                </div>-->
+                        <!--                            </div>-->
+                        <div class="row mt20 mb20">
+                            <div class="col-12 text-right mb30">
+                                <strong>Date:</strong>
+                                <span t-field="o.create_date"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <strong>Admission ID:</strong>
+                                <span t-field="o.admission_id"/>
+                            </div>
+                            <div class="col-4">
+                                <strong>Bill ID:</strong>
+                                <span t-field="o.bill_id"/>
+                            </div>
+                            <div class="col-4">
+                                <strong>OPD ID:</strong>
+                                <span t-field="o.opd_id"/>
+                            </div>
+                        </div>
+<!--                        <div class="row">-->
+<!--                            <div class="col-4">-->
+<!--                                <strong>Address:</strong>-->
+<!--                                <span t-field="o.patient_name.address"/>-->
+<!--                            </div>-->
+<!--                            <div class="col-4">-->
+<!--                                <strong>Sex:</strong>-->
+<!--                                <span t-field="o.patient_name.gender"/>-->
+<!--                            </div>-->
+<!--                            <div class="col-4">-->
+<!--                                <strong>Mobile:</strong>-->
+<!--                                <span t-field="o.patient_name.mobile"/>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                        <br/>
+<!--                        <div class="row mb64">-->
+<!--                            <div class="col-8">-->
+<!--                                <strong>Referred By:</strong>-->
+<!--                                <span t-field="o.referred_by.name"/>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                    </div>
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <span>Total Amount</span>
+                                </th>
+                                <th>
+                                    <span>Paid Amount</span>
+                                </th>
+                                <th>
+                                    <span>Due Amount</span>
+                                </th>
+                                <!--                                <th>-->
+                                <!--                                    <span>Dept</span>-->
+                                <!--                                </th>-->
+
+                                <th>
+                                    <span>Current User</span>
+                                </th>
+                                <th>
+                                    <span>Status</span>
+                                </th>
+                                <th>
+                                    <span>Payment Type</span>
+                                </th>
+
+                                <!--    <th class="text-right"><span>Amount Paid</span></th>    -->
+                                <!--    <th class="text-right"><span>Balance</span></th>   -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-as="o">
+                                <td>
+                                    <span t-field="o.total"/>
+                                </td>
+                                <td>
+                                    <span t-field="o.paid"/>
+                                </td>
+                                <td>
+                                    <span t-field="o.due_amount"/>
+                                </td>
+                                <!--                                <td>-->
+                                <!--                                    <span t-field="z.department"/>-->
+                                <!--                                </td>-->
+<!--                                <td>-->
+<!--                                    <span t-field="z.discount"/>-->
+<!--                                </td>-->
+                                <td>
+                                    <span t-field="o.user_id"/>
+                                </td>
+                                <td>
+                                    <span t-field="o.state"/>
+                                </td>
+                                <td>
+                                    <span t-field="o.payment_type"/>
+                                </td>
+<!--                                <td class="text-right">-->
+<!--                                    <span t-field="z.sub_total_amount"/>-->
+<!--                                </td>-->
+                                <!--                            <td class="text-right"><span t-field="z.rate"/></td>-->
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <div class="col-6"></div>
+                    <div class="col-6 text-right float-right">
+                        <!--                        <strong>Grand Total: </strong><span t-field="o.grand_total"/><br/>-->
+                        <!--                        <strong>Discount: </strong><span t-field="o.discount"/><br/>-->
+                        <!--                        <strong>Paid: </strong><span t-field="o.paid"/><br/>-->
+                        <!--                        <strong>Due: </strong><span t-field="o.due"/>-->
+
+                        <!--                        <t t-if="o.total_without_discount>o.total">-->
+                        <!--&lt;!&ndash;                            <t t-if="o.other_discount>0">&ndash;&gt;-->
+                        <!--                                -->
+                        <!--&lt;!&ndash;                                <strong>Discount Amount:</strong>&ndash;&gt;-->
+                        <!--&lt;!&ndash;                                <span t-field="o.discount_amount"/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;                                <br/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;                            </t>&ndash;&gt;-->
+                        <!--                            -->
+                        <!--                        </t>-->
+                        <!--            Here Added other main model field-->
+<!--                        <div>-->
+<!--                            <strong class="">Total Without Discount:</strong>-->
+<!--                            <span t-field="o.total_without_discount"/>-->
+<!--                        </div>-->
+<!--                        <div>-->
+<!--                            <strong>Discount(Percent):</strong>-->
+<!--                            <span t-field="o.discount_percent"/>%-->
+<!--                            <br/>-->
+<!--                        </div>-->
+<!--                        <div>-->
+<!--                            <strong>Fixed Discount:</strong>-->
+<!--                            <span t-field="o.other_discount"/>-->
+<!--                        </div><br/>-->
+<!--                        <div>-->
+<!--                            <strong>Grand Total:</strong>-->
+<!--                            <span t-field="o.total"/>-->
+<!--                        </div>-->
+
+<!--                        <div>-->
+<!--                            <strong>Paid:</strong>-->
+<!--                            <span t-field="o.paid"/>-->
+<!--                        </div>-->
+<!--                        <div>-->
+<!--                            <strong>Due:</strong>-->
+<!--                            <span t-field="o.due_amount"/>-->
+<!--                        </div>-->
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

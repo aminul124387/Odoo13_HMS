@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="payment_type_list_view">
+        <field name="name">payment.type.list.view</field>
+        <field name="model">payment.type</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="pt_id"/>
+                <field name="acc_name"/>
+                <field name="account_type"/>
+                <field name="service_charge_percent"/>
+                <field name="service_charge_account"/>
+                <field name="payment_acc_num"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="payment_type_form_view">
+        <field name="name">payment.type.form.view</field>
+        <field name="model">payment.type</field>
+        <field name="arch" type="xml">
+            <form string="tree_string">
+                <header>
+<!--                    <button string="Confirmed" type="object" name="payment_confirmed"/>-->
+<!--                    <button string="Cancel" type="object" name="payment_cancel"/>-->
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group string="Make Payment Category">
+                        <group>
+                            <field name="acc_name"/>
+                            <field name="account_type"/>
+                            <field name="service_charge_percent"/>
+                            <field name="service_charge_account"/>
+                            <field name="payment_acc_num"/>
+                            <field name="state"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <!--    Linking the menu Item code added here ===============================-->
+
+
+    <!--  This code is used for Action Window-->
+    <record model="ir.actions.act_window" id="payment_type_action_window">
+        <field name="name">Payment</field>
+        <field name="res_model">payment.type</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="payment_menu_item4" name="Payment" parent="hospital_menu_root" sequence="10"/>
+    <menuitem name="Payment Type" id="hospital_payment_type" parent="payment_menu_item4"
+              action="payment_type_action_window"/>
+</odoo>

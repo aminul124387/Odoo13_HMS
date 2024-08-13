@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="appointment_paid_list_view">
+        <field name="name">Appointment.Paid.List.View</field>
+        <field name="model">appointment.paid</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="app_payment_id"/>
+                <field name="patient_status"/>
+                <field name="amount"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="appointment_paid_form_view">
+        <field name="name">appointment.paid.Form.View</field>
+        <field name="model">appointment.paid</field>
+        <field name="arch" type="xml">
+            <form string="tree_string">
+                <header>
+                    <button string="Reached" type="object" name="action_reach" class="oe_highlight"/>
+                    <button string="Done" type="object" name="action_done" class="oe_highlight"/>
+                    <button string="Cancel" type="object" name="action_cancel"/>
+                    <field name="patient_status" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group string="Appointment Paid Form">
+                        <group>
+                           <field name="app_payment_id"/>
+                            <field name="patient_status"/>
+                            <field name="amount"/>
+                        </group>
+                    </group>
+                    <br/><br/><br/>
+                    <footer>
+                        <button name="btn_paid" type="object" string="Pay" class="btn-danger"/> or <button string="Cancel" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--    Linking the menu Item code added here ===============================-->
+
+    <record model="ir.ui.view" id="appointment_paid_list_search">
+        <field name="name">Opd.List.Search</field>
+        <field name="model">appointment.paid</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="app_payment_id"/>
+                <field name="patient_status"/>
+                <field name="amount"/>
+            </search>
+        </field>
+    </record>
+    <!--  This code is used for Action Window-->
+    <record model="ir.actions.act_window" id="appointment_paid_action_window">
+        <field name="name">Appointment Payment</field>
+        <field name="res_model">appointment.paid</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+    <menuitem name="Appointment Paid" id="appointment_paid_sub_menu" parent="appointment_booking_menu_item"
+              action="appointment_paid_action_window" sequence="2"/>
+
+</odoo>

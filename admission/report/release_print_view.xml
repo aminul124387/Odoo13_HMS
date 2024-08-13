@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <report
+                id="report_admission_info_release_template_action_id"
+                model="admission.info"
+                string="*** Hospital Release Slip ***"
+                name="general_hospital_v_03.report_admission_release_print_view"
+                file="general_hospital_v_03.report_admission_release_print_view"
+                report_type="qweb-pdf"/>
+
+        <template id="report_admission_release_print_view">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <h1 style="text-align:center;">Lions Eye &amp; General Hospital</h1>
+                            <h3 style="color: #333333;text-align:center; border-bottom: 2px solid #E3E3E3;">
+                                Discharge Certificate
+                            </h3>
+                            <br/>
+                            <div class="row">
+                                <div class="col-6 text-left">
+                                    <strong>Date From:</strong>
+                                    <span t-field="o.create_date"/>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <strong>Date To:</strong>
+                                    <span t-field="o.release_note_date"/>
+                                </div>
+                            </div>
+                            <br/>
+                            <br/>
+                            <div class="row">
+                                <div class="col-4">
+                                    <strong>Patient ID:</strong>
+                                    <span t-field="o.patient_name.patient_id"/>
+                                </div>
+                                <div class="col-4">
+                                    <strong>Name:</strong>
+                                    <span t-field="o.patient_name.name"/>
+                                </div>
+                                <div class="col-4">
+                                    <strong>Age:</strong>
+                                    <span t-field="o.patient_name.age"/><span>y</span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4">
+                                    <strong>Address:</strong>
+                                    <span t-field="o.patient_name.address"/>
+                                </div>
+                                <div class="col-4">
+                                    <strong>Gender:</strong>
+                                    <span t-field="o.patient_name.gender"/>
+                                </div>
+                                <div class="col-4">
+                                    <strong>Mobile:</strong>
+                                    <span t-field="o.patient_name.mobile"/>
+                                </div>
+                            </div>
+                            <br/>
+<!--                            <div class="row mb64">-->
+<!--                                <div class="col-8">-->
+<!--                                    <strong>Referred By:</strong>-->
+<!--                                    <span t-field="o.referred_by.name"/>-->
+<!--                                </div>-->
+<!--                            </div>-->
+                        </div>
+                        <hr/>
+
+                        <div class="row mt20 mb20">
+                            <div class="col-12 text-left mb30">
+                                <h4><strong>Diagnosis:</strong></h4>
+                            </div>
+                        </div>
+                        <div class="row" style="height:400px;">
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6 text-left">
+                                <strong style="border-bottom: 3px solid black;">Consultant</strong>
+                            </div>
+                            <div class="col-6 text-right">
+                                <strong style="border-bottom: 3px solid black;">Medical Officer</strong>
+                            </div>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

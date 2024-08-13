@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="patient_wizard_report_form" model="ir.ui.view">
+            <field name="name">Patient.Report.Wizard.Form</field>
+            <field name="model">patient.report.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Report Patient Wizard">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="gender"/>
+                            </group>
+
+                            <group>
+                                <field name="age"/>
+                            </group>
+<!--                            <group>-->
+<!--                                <field name="date_to"/>-->
+<!--                            </group>-->
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button string="Print" name="action_btn_patient_report_info" class="btn btn-info"
+                                type="object"/>
+                        <button string="Cancel" name="cancel_action" class="btn btn-danger" type="object"
+                                special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_patient_report_wizard_id" model="ir.actions.act_window">
+            <field name="name">Patient Report Wizard</field>
+            <field name="res_model">patient.report.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+<!--        <menuitem name="Report" id="collection_main_menu" parent="hospital_menu_root" sequence="11"/>-->
+        <menuitem name="Patient Report" id="patient_wizard_report_pdf" parent="collection_main_menu"
+                  action="action_patient_report_wizard_id"/>
+
+    </data>
+</odoo>

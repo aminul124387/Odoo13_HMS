@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="blood_donor_view" model="ir.ui.view">
+            <field name="name">blood.donor.form</field>
+            <field name="model">blood.donor</field>
+            <field name="arch" type="xml">
+                <form string="Blood Donor">
+                    <header>
+                        <button name="calculate_age" string="Calculate Age"/>
+                    </header>
+                    <sheet>
+                        <group string="Blood Donor Information">
+                            <group>
+                                <field name="blood_donation_date"/>
+                                <field name="donor_name"/>
+                                <field name="mobile_no"/>
+                                <field name="date_of_birth"/>
+                                <field name="age"/>
+                                <field name="description"/>
+                                <field name="blood_group" placeholder="--Select Blood Group--"/>
+                                <field name="cost"/>
+                                <field name="expired_date"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="blood_donor_tree">
+            <field name="name">blood.donor.tree</field>
+            <field name="model">blood.donor</field>
+            <field name="arch" type="xml">
+                <tree string="Blood Donor List">
+                    <field name="blood_donation_date"/>
+                    <field name="donor_name"/>
+                    <field name="mobile_no"/>
+                    <field name="description"/>
+                    <field name="blood_group"/>
+                    <field name="cost"/>
+                    <field name="expired_date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="blood_donor_action" model="ir.actions.act_window">
+            <field name="name">Blood Donor</field>
+            <field name="res_model">blood.donor</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Blood Bank" id="blood_bank_menu" parent="hospital_menu_root" sequence="13"/>
+        <menuitem name="Blood Donor" id="blood_donor_menu" parent="blood_bank_menu" action="blood_donor_action"/>
+    </data>
+</odoo>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="create_appointment_view">
+        <field name="name">Create.Appointmen.View</field>
+        <field name="model">create.appointment.wizard</field>
+        <field name="arch" type="xml">
+            <form string="tree_string">
+<!--                <header>-->
+<!--                    <button string="Pay" type="object" name="action_pay" class="oe_highlight"/>-->
+<!--                    <button string="Cancel" type="object" name="action_cancel"/>-->
+<!--                    <field name="state" widget="statusbar"/>-->
+<!--                </header>-->
+                <sheet>
+                    <group string="Appointment Form">
+                        <group>
+                            <field name="patient_id"/>
+                            <field name="app_datetime"/>
+<!--                            <field name="patient_name"/>-->
+                        </group>
+                        <group>
+                            <field name="doctor_id"/>
+                            <field name="patient_status"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Create Appointment" name="button_action_create_appointment" type="object" class="oe_highlight"/>
+                    <button string="Cancel" special="cancel" type="object" class="btn btn-danger"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record model="ir.actions.act_window" id="create_appointment_action">
+        <field name="name">Appointment</field>
+        <field name="res_model">create.appointment.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+
+    <menuitem name="Create Appointment" id="create_appointmen_menu" parent="appointment_booking_menu_item"
+              action="create_appointment_action" sequence="5"/>
+
+</odoo>

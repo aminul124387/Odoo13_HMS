@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="discount_type_list_view">
+        <field name="name">discount.category.list.view</field>
+        <field name="model">discount.category</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="discount_cat_id"/>
+                <field name="discount_cat_name"/>
+                <field name="bank_account_name"/>
+                <field name="amount_fixed"/>
+                <field name="amount_percent"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="discount_form_view">
+        <field name="name">discount.category.form.view</field>
+        <field name="model">discount.category</field>
+        <field name="arch" type="xml">
+            <form string="tree_string">
+                <header>
+                    <button string="Approved" type="object"/>
+                    <button string="Cancel" type="object"/>
+                </header>
+                <sheet>
+                    <group string="Discount Category Form">
+                        <group>
+                            <field name="date"/>
+                        </group>
+                        <group>
+                            <field name="discount_cat_id"/>
+                        </group>
+                        <group>
+                            <field name="discount_cat_name"/>
+                            <field name="bank_account_name"/>
+                        </group>
+                        <group>
+                            <field name="amount_fixed"/>
+                            <field name="amount_percent"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Admission Details">
+                            <!--                                <field name="admission_line_id" mode="tree">-->
+                            <!--                                    <tree string="Select Admission Item" editable="top">-->
+                            <!--                                        <field name="item_name" on_change="onchange_item(item_name, context)"/>-->
+                            <!--                                        <field name="department"/>-->
+                            <!--                                        <field name="price"/>-->
+                            <!--                                        <field name="total_amount"/>-->
+                            <!--                                    </tree>-->
+                            <!--                                </field>-->
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <!--    Linking the menu Item code added here ===============================-->
+
+
+    <!--  This code is used for Action Window-->
+    <record model="ir.actions.act_window" id="discount_action_window">
+        <field name="name">Discount Type</field>
+        <field name="res_model">discount.category</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem name="Discount Type" id="discount_category_menu" parent="discount_menu"
+              action="discount_action_window"/>
+</odoo>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="commission_payment_list_view">
+        <field name="name">Commission.Payment.List.View</field>
+        <field name="model">commission.payment</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="commission_payment_id"/>
+                <field name="name"/>
+                <field name="broker_name"/>
+                <field name="commission"/>
+                <field name="paid_amount"/>
+                <field name="due_amount"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="commission_payment_form_view">
+        <field name="name">Commission.Payment.Form.View</field>
+        <field name="model">commission.payment</field>
+        <field name="arch" type="xml">
+            <form string="tree_string">
+                <header>
+                    <button string="Confirm and Print" type="object" name="action_confirm" class="oe_highlight"/>
+                    <button string="Cancel" type="object" name="action_cancel"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <group string="Commission Payment Form">
+                        <group>
+                            <field name="date"/>
+                            <field name="commission_payment_id" readonly="1"/>
+                            <field name="name"/>
+                            <field name="broker_name"/>
+                        </group>
+
+                        <group>
+                            <field name="commission"/>
+                            <field name="debit_account"/>
+                            <field name="credit_account"/>
+                            <field name="payment_period"/>
+                        </group>
+                        <group>
+                            <field name="paid_amount"/>
+                            <field name="due_amount"/>
+                            <field name="payment_note"/>
+                            <field name="state"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="btn_success" type="object" string="Pay" class="btn-danger"/> or <button string="Cancel" special="cancel"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!--    Linking the menu Item code added here ===============================-->
+
+    <record model="ir.ui.view" id="commission_payment_list_search">
+        <field name="name">Commission.List.Search</field>
+        <field name="model">commission.payment</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="commission_payment_id"/>
+
+            </search>
+        </field>
+    </record>
+    <!--  This code is used for Action Window-->
+    <record model="ir.actions.act_window" id="commission_payment_action_window">
+        <field name="name">Commission</field>
+        <field name="res_model">commission.payment</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem name="Payment Commission" id="commission_payment_sub_menu_list" parent="commission_menu_item" action="commission_payment_action_window" sequence="1"/>
+    <menuitem name="Commission Confirmed Report" id="commission_confirmed_sub_menu_list" parent="commission_menu_item" action="commission_payment_action_window"  sequence="2"/>
+
+</odoo>

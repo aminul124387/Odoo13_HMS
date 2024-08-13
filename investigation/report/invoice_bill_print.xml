@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <template id="invoice_form">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="row mt1 mb44">
+                            <div class="col-12 text-center mt190">
+                                <h4 style="text-align:center;">
+                                    <strong>@_
+                                        <span t-field="o.bill_id"/>
+                                    </strong>
+                                </h4>
+                            </div>
+                        </div><hr/>
+                        <!--                            <div class="row mt10">-->
+                        <!--                                <div class="col-12 text-right" t-if="o.name">-->
+                        <!--                                   <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.name, 600, 100)" style="width:300px;height:40px; margin-bottom:20px;"/>-->
+                        <!--                                </div>-->
+                        <!--                            </div>-->
+                        <div class="row mt20 mb20">
+                            <div class="col-12 text-right mb30">
+                                <strong>Date:</strong>
+                                <span t-field="o.create_date"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <strong>Patient ID:</strong>
+                                <span t-field="o.patient_name.patient_id"/>
+                            </div>
+                            <div class="col-4">
+                                <strong>Name:</strong>
+                                <span t-field="o.patient_name.name"/>
+                            </div>
+                            <div class="col-4">
+                                <strong>Age:</strong>
+                                <span t-field="o.patient_name.age"/>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <strong>Address:</strong>
+                                <span t-field="o.patient_name.address"/>
+                            </div>
+                            <div class="col-4">
+                                <strong>Sex:</strong>
+                                <span t-field="o.patient_name.gender"/>
+                            </div>
+                            <div class="col-4">
+                                <strong>Mobile:</strong>
+                                <span t-field="o.patient_name.mobile"/>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <br/>
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <span>Grand Total</span>
+                                </th>
+                                <th>
+                                    <span>Received Amount</span>
+                                </th>
+                                <th class="text-right">
+                                    <span>Total Paid</span>
+                                </th>
+                                <!--    <th class="text-right"><span>Amount Paid</span></th>    -->
+                                <!--    <th class="text-right"><span>Balance</span></th>   -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <span t-field="o.total"/>
+                                </td>
+                                <td>
+                                    <span t-field="o.paid"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="o.paid"/>
+                                </td>
+                                <!--                            <td class="text-right"><span t-field="z.rate"/></td>-->
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br/>
+                    <br/>
+                    <br/><hr/>
+                    <div class="col-6 text-left float-left">
+                        <td class="text-right">
+                            <strong class="">Created By:</strong>
+                            <span t-field="o.user_id"/>
+                        </td>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

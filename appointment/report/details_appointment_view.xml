@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="datewise_admission_report_wizard_form" model="ir.ui.view">
+            <field name="name">Appointment.Report.Wizard.Form</field>
+            <field name="model">appointment.report.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Report Admission Wizard">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="patient_id"/>
+                            </group>
+                            <group></group>
+                            <group>
+                                <field name="date_from"/>
+                            </group>
+                            <group>
+                                <field name="date_to"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button string="Print Details" name="btn_datewisereport_admission" class="btn btn-info"
+                                type="object"/>
+                        <button string="Cancel" name="cancel_action" class="btn btn-danger" type="object"
+                                special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_appointment_date_wise_report_id" model="ir.actions.act_window">
+            <field name="name">Appointment Report Wizard</field>
+            <field name="res_model">appointment.report.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+<!--        <menuitem name="Report" id="collection_main_menu" parent="hospital_menu_root" sequence="11"/>-->
+        <menuitem name="Appointment Report" id="appointment_detail_date_wise_report" parent="collection_main_menu"
+                  action="action_appointment_date_wise_report_id"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="pharmacy_item_list_view">
+        <field name="name">Pharmacy.Item.list.view</field>
+        <field name="model">pharmacy.item</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="product"/>
+                <field name="price"/>
+                <field name="quantity"/>
+                <field name="sub_total"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="pharmacy_item_form_view">
+        <field name="name">pharmacy.item.form.view</field>
+        <field name="model">pharmacy.item</field>
+        <field name="arch" type="xml">
+            <form string="tree_string">
+                <!--                <header>-->
+                <!--                    <button string="Confirmed" type="object" name="item_confirmed"/>-->
+                <!--                    <button string="Cancel" type="object" name="item_cancel"/>-->
+                <!--                    <field name="state" widget="statusbar"/>-->
+                <!--                </header>-->
+                <sheet>
+                    <group string="Pharmacy Medicine">
+                        <group>
+                            <field name="product"/>
+                            <field name="price"/>
+                            <field name="quantity"/>
+                            <field name="sub_total"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <!--    Linking the menu Item code added here ===============================-->
+
+
+    <!--  This code is used for Action Window-->
+    <record model="ir.actions.act_window" id="pharmacy_item_action_window">
+        <field name="name">Medicine Item</field>
+        <field name="res_model">pharmacy.item</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Pharmacy Medicine" id="hospital_menu_pharmacy_medicine" parent="configure_menu"
+              action="pharmacy_item_action_window"/>
+<!--    <menuitem name="Pharmacy Medicine" id="hospital_menu_pharmacy_medicine" parent="appointment_booking_menu_item"-->
+<!--              action="pharmacy_item_action_window" sequence="5"/>-->
+</odoo>
+
+

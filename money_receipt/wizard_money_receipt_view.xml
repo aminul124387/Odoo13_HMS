@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="wizard_money_receipt_form_view">
+            <field name="name">money.receipt.wizard.form</field>
+            <field name="model">money.receipt.wizard</field>
+            <field name="arch" type="xml">
+                <form string="*** Refund Form View ***">
+                    <header>
+                        <button string="Print Reverse Receipt" type="object" name="print_receipt" class="btn btn-info"/>
+                        <button string="Payment Refund" type="object" name="customer_refund_payment" class="oe_highlight"/>
+                        <button string="Cancel" type="object" name="customer_cancel" class="btn btn-danger"/>
+<!--                        <field name="state" widget="statusbar"/>-->
+                    </header>
+                    <sheet>
+                        <group>
+                            <group string="Reverse Money Receipt Info">
+                                <field name="date"/>
+                                <field name="reverse_mr_id"/>
+                                <field name="bill_id"/>
+                                <field name="admission_id"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="total"/>
+                                <field name="paid"/>
+                                <field name="adv"/>
+                                <field name="due_amount"/>
+                            </group>
+                            <group>
+                                <field name="user_id"/>
+                                <field name="reverse_mr_id"/>
+                                <field name="state"/>
+                                <field name="payable_amount"/>
+                                <field name="refund_customer_amount"/>
+                            </group>
+                        </group>
+                        <br/>
+                        <notebook>
+                            <page string="Reverse Payment Info">
+                                <field name="reverse_payment_line_ids" mode="tree">
+                                    <tree string="Money Reference Value" editable="bottom">
+<!--                                        <field name="payment_type"/>-->
+                                        <field name="cash_amount"/>
+                                        <field name="mfs_amount"/>
+<!--                                        <field name="mcash_mobile_no_payment"/>-->
+<!--                                        <field name="psn"/>-->
+                                        <field name="card_amount"/>
+<!--                                        <field name="ac_no"/>-->
+                                        <field name="payment_process_type"/>
+                                        <field name="date"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="wizard_money_receipt_tree_view">
+            <field name="name">Money.Receipt.Wizard.Tree</field>
+            <field name="model">money.receipt.wizard</field>
+            <field name="arch" type="xml">
+                <tree string="Money Receipt List">
+                    <field name="reverse_mr_id"/>
+                    <field name="reverse_mr_id"/>
+                    <field name="bill_id"/>
+                    <field name="admission_id"/>
+                    <field name="date"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="wizard_money_receipt_action_id">
+            <field name="name">Wizard.Money Receipt</field>
+            <field name="res_model">money.receipt.wizard</field>
+            <field name="view_mode">form,tree</field>
+            <field name="target">new</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new Department
+                </p>
+            </field>
+        </record>
+
+
+<!--        <menuitem name="General Hospital" id="hospital_menu_root"/>-->
+        <menuitem id="wizard_mr_menu_receipt" name="Reverse Payment" parent="configure_menu"
+                  action="wizard_money_receipt_action_id"/>
+    </data>
+</odoo>

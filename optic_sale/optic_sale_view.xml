@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="optic_sale_form">
+            <field name="name">optics.sale.views</field>
+            <field name="model">optics.sale</field>
+            <field name="arch" type="xml">
+                <form string="Optics">
+                    <header>
+                        <button string="Add Discount" type="object" name="add_discount"/>
+                        <button string="Add payment" type="object" name="btn_pay_bill"/>
+                        <button string="Corporate Discount" type="object" name="btn_corporate_discount"/>
+                        <button string="Confirm and Print" type="object" name="action_confirm"/>
+                        <button string="Cancel" type="object" name="action_cancel"/>
+                        <field name="status" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <widget name="web_ribbon" title="Created" bg_color="bg-primary"
+                                attrs="{'invisible': [('status', '!=', 'pending')]}"/>
+                        <widget name="web_ribbon" title="Confirmed" bg_color="bg-success"
+                                attrs="{'invisible': [('status', '!=', 'confirmed')]}"/>
+                        <widget name="web_ribbon" title="Cancel" bg_color="bg-danger"
+                                attrs="{'invisible': [('status', '!=', 'cancelled')]}"/>
+                        <group string="Optics Sale">
+                            <group>
+                                <field name="date"/>
+                                <field name="optic_sale_id"/>
+                                <field name="patient_name"/>
+                                <field name="patient_id"/>
+                                <field name="mobile"/>
+                                <field name="address"/>
+                                <field name="age"/>
+                                <field name="gender"/>
+                            </group>
+                        </group>
+                        <group col="6">
+                            <field name="right_eye_sph"/>
+                            <field name="right_eye_cyl"/>
+                            <field name="right_eye_axis"/>
+                            <field name="right_eye_sph_n"/>
+                            <field name="right_eye_cyl_n"/>
+                            <field name="right_eye_axis_n"/>
+                            <field name="left_eye_sph"/>
+                            <field name="left_eye_cyl"/>
+                            <field name="left_eye_axis"/>
+                            <field name="left_eye_sph_n"/>
+                            <field name="left_eye_cyl_n"/>
+                            <field name="left_eye_axis_n"/>
+                        </group>
+                        <group>
+                            <field name="hard_cover"/>
+                            <field name="cell_pad"/>
+                            <field name="frame_id"/>
+                            <field name="qty_available"/>
+                            <field name="quantity"/>
+                            <field name="price"/>
+                            <field name="delivery_date"/>
+                        </group>
+                        <notebook>
+                            <page string="Lens Info">
+<!--                                <field name="optics_sale_line_id" mode="tree">-->
+<!--                                    <tree string="Lens Details" editable="bottom">-->
+<!--                                        <field name="name"/>-->
+<!--                                        <field name="price"/>-->
+<!--                                        <field name="qty"/>-->
+<!--                                        <field name="total_amount"/>-->
+<!--                                    </tree>-->
+<!--                                </field>-->
+                            </page>
+                            <page string="Payment Info">
+                                <!--                                <field name="optics_sale_payment_line_id" mode="tree">-->
+                                <!--                                    <tree string="Select Referance Value" editable="top">-->
+
+                                <!--                                        <field name="date"/>-->
+                                <!--                                        <field name="amount"/>-->
+                                <!--                                        <field name="type"/>-->
+                                <!--                                        <field name="card_no"/>-->
+                                <!--                                        <field name="bank_name"/>-->
+                                <!--                                        <field name="money_receipt_id"/>-->
+
+                                <!--                                    </tree>-->
+                                <!--                                </field>-->
+                            </page>
+                        </notebook>
+                        <group>
+                            <group>
+                                <field name="payment_type"/>
+                                <field name="ac_no" attrs="{'invisible': [('payment_type', '!=', 'card')]}" placeholder='Select Account'/>
+                                <field name="psn"
+                                       attrs="{'invisible': [('payment_type', '!=', 'm_cash')]}" placeholder='Select Mobile Payment Type'/>
+                                <field name="mcash_mobile_no_payment"
+                                       attrs="{'invisible': [('payment_type', '!=', 'm_cash')]}" placeholder='Enter Last 4 Digit'/>
+                                <field name="card_no_payment" attrs="{'invisible': [('payment_type', '!=', 'card')]}" placeholder='Enter Last 4 Digit'/>
+                            </group>
+                            <group>
+                                <field name="total_without_discount"/>
+                                <br/>
+                                <field name="discount_percent"/>
+                                <field name="other_discount"/>
+                                <field name="total"/>
+                                <field name="other_discount"/>
+                                <field name="paid"/>
+                                <field name="due_amount"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="optic_sale_tree">
+            <field name="name">optics.sale.tree</field>
+            <field name="model">optics.sale</field>
+            <field name="arch" type="xml">
+                <tree string="Optics Sale"
+                    decoration-success="status=='confirmed'"
+                    decoration-danger="status=='cancelled'"
+                    decoration-primary="status=='pending'"
+                >
+                    <field name="optic_sale_id"/>
+                    <field name="date"/>
+                    <field name="patient_name"/>
+                    <field name="mobile"/>
+                    <field name="total_without_discount"/>
+                    <field name="total"/>
+                    <field name="paid"/>
+                    <field name="due_amount"/>
+                    <field name="status" widget="badge"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="optics_sale_action" model="ir.actions.act_window">
+            <field name="name">Optics Sale</field>
+            <field name="res_model">optics.sale</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Optics Sale" id="optics_sale_menu" parent="optics_menu"
+                  action="optics_sale_action"/>
+
+    </data>
+</odoo>

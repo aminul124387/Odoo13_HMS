@@ -1,0 +1,50 @@
+<odoo>
+    <data>
+        <record id="view_cancel_model_form" model="ir.ui.view">
+            <field name="name">cancel.model.form</field>
+            <field name="model">cancel.appointment</field>
+            <field name="arch" type="xml">
+                <form string="Cancel Model">
+                    <group>
+                        <group>
+                            <field name="cancel_date" readonly="1"/><hr/>
+                            <field name="cancel_app_id" domain="[('state', '!=', 'cancelled')]"/>
+<!--                            <field name="reason_app"/>-->
+                            <field name="cancel_bill_id" domain="[('state', '!=', 'cancelled')]"/><hr/>
+                            <field name="cancel_adn_id" domain="[('state', '!=', 'cancelled')]"/><hr/>
+                        </group>
+                        <group>
+                            <field name="cancel_reason"/>
+<!--                            <field name="cancel_model_type"/>-->
+                            <field name="cancel_approved_by"/>
+                        </group>
+                    </group><br/><br/><br/>
+                    <footer>
+                        <button name="cancel_appointment" string="Cancel" type="object" class="btn btn-danger"/>
+<!--                        <button name="cancel_bill" string="Cancel Investigation" type="object" class="btn btn-danger"/>-->
+                        Or<button string="Close" type="object" class="btn btn-info" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record id="cancell_bill_tree_view" model="ir.ui.view">
+            <field name="name">Cancel.Appointment.Tree</field>
+            <field name="model">cancel.appointment</field>
+            <field name="arch" type="xml">
+                <tree string="Cancel Information">
+                    <field name="cancel_app_id"/>
+                    <field name="cancel_bill_id"/>
+                    <field name="cancel_reason"/>
+                    <field name="cancel_date"/>
+                </tree>
+            </field>
+        </record>
+        <record id="cancel_information_action" model="ir.actions.act_window">
+            <field name="name">Cancel Bill</field>
+            <field name="res_model">cancel.appointment</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="Cancel Bill Info" id="cancel_config_menu_sub" parent="configure_menu"
+              action="cancel_information_action"/>
+    </data>
+</odoo>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="reverse_admission_view_wizard_form" model="ir.ui.view">
+        <field name="name">Admission.Register.Wizard.Form</field>
+        <field name="model">admission.info.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Reverse Admission Wizard">
+                <sheet>
+                    <group string="*** Reverse Admission Form ***"><hr/>
+                        <br/>
+                        <br/>
+                        <group>
+                            <field name="date"/>
+                            <field name="admission_id"/><hr/>
+                            <field name="reverse_reason" placeholder="Please Give Valid Reverse Reason!" required="1"/>
+                        </group>
+                        <group>
+                            <field name='referred_by'/>
+                            <field name='referral'/>
+                            <field name='partner_id'/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Admission Item Lines">
+                            <field name="admission_line_id" mode="tree">
+                                <tree string="Select Admission Item" editable="bottom">
+                                    <field name="item_name"/>
+                                    <field name="department"/>
+                                    <field name="quantity"/>
+                                    <field name="total_price"/>
+                                    <field name="flat_discount"/>
+                                    <field name="discount_percent"/>
+                                    <field name="total_discount"/>
+                                    <field name="sub_total_amount"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <group>
+                        <group><hr/>
+                            <field name="service_charge"/><hr/>
+                            <field name="discount_remarks" attrs="{
+                            'required': [('discount_required', '=', True)],
+                            'visible': [('discount_required', '=', True)]
+                            }"/><hr/>
+                            <field name="discount_required" invisible="1"/>
+                            <field name="refund_amount"/>
+                            <field name="payable_amount"/>
+                        </group>
+                        <group>
+                            <field name="total_without_discount"/>
+                            <field name="discount_percent"/>
+                            <field name="other_discount"/>
+                            <field name="total"/><hr/>
+                            <field name="adv"/>
+                            <field name="paid"/><hr/>
+                            <field name="due_amount"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button string="Update Admission Info" name="admissionUpdateInfo" type="object" class="oe_highlight"
+                    confirm="Are You Sure This Bill Data Update!" />OR
+                    <button string="Print Details" name="action_print_report_details" class="btn btn-info" type="object"/>
+                    <button string="Cancel" name="cancel_action" class="btn btn-danger" type="object" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+
+    </record>
+
+    <record id="action_admission_reverse_id" model="ir.actions.act_window">
+        <field name="name">Admission Items</field>
+        <field name="res_model">admission.info.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>
+

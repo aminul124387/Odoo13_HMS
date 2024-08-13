@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="department_form" model="ir.ui.view">
+            <field name="name">department.config.view</field>
+            <field name="model">department.config</field>
+            <field name="arch" type="xml">
+                <form string="Department">
+                    <sheet>
+                        <group string="Department">
+                            <field name="dept_name"/>
+                            <field name="parent_dept"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="department_tree">
+            <field name="name">department.config.tree</field>
+            <field name="model">department.config</field>
+            <field name="arch" type="xml">
+                <tree string="Department List">
+                    <field name="dept_name"/>
+                    <field name="parent_dept"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="department_action" model="ir.actions.act_window">
+            <field name="name">Department</field>
+            <field name="res_model">department.config</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+<!--        <menuitem name="Department" id="department_config_menu" parent="hospital_menu_root"/>-->
+        <menuitem name="All Department" id="department_config_menu_sub" parent="configure_menu" action="department_action"/>
+
+    </data>
+</odoo>

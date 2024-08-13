@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <template id="details_appointment_report_template_id">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <div class="text-center">
+                        <h2>Appointment Details</h2>
+                    </div>
+                    <br/>
+                    <br/>
+                    <table class="oe_structure colored-table">
+                        <tr style="padding: 10px;">
+                            <td style="padding-right: 10px;">
+                                <strong>Patient:</strong>
+                            </td>
+                            <td></td>
+                            <td style="padding-left: 10px;">
+                                <t t-if="form_data.get('patient_id')">
+                                    <span t-esc="form_data['patient_id'][1]" style="color: green;"/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr style="padding: 10px;">
+                            <td style="padding-right: 10px;">
+                                <strong>Date From:</strong>
+                            </td>
+                            <td></td>
+                            <td style="padding-left: 10px;">
+                                <t t-if="form_data.get('date_from')">
+                                    <span t-esc="form_data['date_from']" style="color: green;"/>
+                                </t>
+                            </td>
+                        </tr>
+                        <tr style="padding: 10px;">
+                            <td style="padding-right: 10px;">
+                                <strong>Date To:</strong>
+                            </td>
+                            <td></td>
+                            <td style="padding-left: 10px;">
+                                <t t-if="form_data.get('date_to')">
+                                    <span t-esc="form_data['date_to']" style="color: green;"/>
+                                </t>
+                            </td>
+                        </tr>
+
+                    </table>
+
+                    <br/>
+                    <table class="table table-bordered mt32">
+                        <thead>
+                            <tr>
+                                <th t-attf-name="th_reference" class="text-left">
+                                    <span>Reference</span>
+                                </th>
+                                <th t-attf-name="th_age" class="text-left">
+                                    <span>Age</span>
+                                </th>
+                                <th t-attf-name="th_date" class="text-left">
+                                    <span>Booking Date</span>
+                                </th>
+                                <!--                                <th t-attf-name="th_doctor" class="text-left">-->
+                                <!--                                    <span>Doctor Name</span>-->
+                                <!--                                </th>-->
+                                <th t-attf-name="th_amount" class="text-left">
+                                    <span>Amount</span>
+                                </th>
+                                <th t-attf-name="th_duration" class="text-left">
+                                    <span>Duration</span>
+                                </th>
+                                <th t-attf-name="th_state" class="text-left">
+                                    <span>Status</span>
+                                </th>
+                            </tr>
+                        </thead>
+                        <t t-set="appointment_count" t-value="0"/>
+                        <t t-foreach="appointments" t-as="line">
+                            <t t-set="appointment_count" t-value="appointment_count + 1"/>
+                            <tr>
+                                <td>
+                                    <span t-esc="line['app_id']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="line['age']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="line['app_datetime']"/>
+                                </td>
+                                <!--                                <td>-->
+                                <!--                                    <span t-esc="line['doctor_id'][1]"/>-->
+                                <!--                                </td>-->
+                                <td>
+                                    <span t-esc="line['amount']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="line['duration']"/>
+                                </td>
+                                <td>
+                                    <span t-esc="line['state']"/>
+                                </td>
+                            </tr>
+                        </t>
+                        <tr>
+                            <td>
+                                <strong>Total Appointments:</strong>
+                            </td>
+                            <td>
+                                <strong>
+                                    <span t-esc="appointment_count"/>
+                                </strong>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
+

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record model="ir.ui.view" id="prescriptions_list_view">
+        <field name="name">Prescriptions.list.view</field>
+        <field name="model">prescriptions.info</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="prescriptions_id"/>
+                <field name="name"/>
+                <field name="pharmacy"/>
+                <field name="date"/>
+                <field name="total"/>
+                <field name="paid_amount"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record model="ir.ui.view" id="prescriptions_form_view">
+        <field name="name">Prescriptions.form.view</field>
+        <field name="model">prescriptions.info</field>
+        <field name="arch" type="xml">
+            <form string="tree_string">
+                <header>
+                    <button string="Consultancy Invoice" type="object" name="Customer Invoice" />
+                    <button string="Create Invoice" type="object" name="Customer_Invoice" />
+                    <button string="Send Pharmacy" type="object" name="Medicine_send_Pharmacy" />
+                    <button string="Print Prescription" type="object" name="Print_Prescription" />
+                    <button string="Cancel" type="object" name="Customer_Cancel" confirm="Are you sure you want to do this?"/>
+                    <field name="state" widget="statusbar" type="object"/>
+                </header>
+                <sheet>
+                    <xpath expr="//sheet/group" position="after">
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" type="object" string="Consultancy Invoice" name="view_invoice" icon="fa-money"/>
+                            <button class="oe_stat_button" type="object" string="Appointment" name="view_appointment" icon="fa-user-md"/>
+                            <button class="oe_stat_button" type="object" string="Medicine" name="view_medicine" icon="fa-pagelines"/>
+                            <button class="oe_stat_button" type="object" string="Prescriptions" name="view_prescriptions" icon="fa-list-alt"/>
+                            <button class="oe_stat_button" type="object" string="Lab Test" name="view_labtest" icon="fa-flask"/>
+                            <button class="oe_stat_button" type="object" string="Ward Info" name="view_ward_info" icon="fa-bed"/>
+                        </div>
+                    </xpath>
+<!--                    <div class="oe_inline">-->
+<!--                        <newline/>-->
+<!--                        <separator string="Patient Profile"/>-->
+<!--                        <b>-->
+<!--                            <field name="patient_id" readonly="1" />-->
+<!--                        </b>-->
+<!--                        <br/>-->
+
+<!--                        <field name="photo" widget="image" class="oe_avatar oe_left" style="max-width:100px;max-height:117px;"/>-->
+<!--                    </div>-->
+                    <br/>
+                    <br/>
+                    <div class="oe_title">
+                            <group>
+                                <field name="name" placeholder="Full Name" required="1"/>
+                            </group>
+                        </div>
+                    <group>
+                        <group>
+                            <field name="prescriptions_id"/>
+                            <field name="pharmacy"/>
+                            <field name="date"/>
+<!--                            <field name="dob"/>-->
+                        </group>
+
+                        <group>
+                            <field name="total"/>
+                            <field name="grand_total"/>
+                            <field name="paid_amount"/>
+                            <field name="due_amount"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Prescriptions Details">
+                            <field name="prescriptions_line_id" mode="tree">
+                                <tree string="Select Prescriptions Item" editable="top">
+                                    <field name="item_name"/>
+                                    <field name="department"/>
+                                    <field name="price"/>
+                                    <field name="total_amount"/>
+                                </tree>
+                            </field>
+                        </page>
+                        <page string="Evaluations">
+<!--                            <field name="patient_line_id" mode="tree">-->
+<!--                                <tree string="Select Admission Item" editable="top">-->
+<!--                                    <field name="item_name"/>-->
+<!--                                    <field name="department"/>-->
+<!--                                    <field name="price"/>-->
+<!--                                    <field name="total_amount"/>-->
+<!--                                </tree>-->
+<!--                            </field>-->
+                        </page>
+                    </notebook>
+                    <group>
+                        <group>
+                            <field name="total"/>
+                            <field name="grand_total"/>
+                            <field name="paid_amount"/>
+                        </group>
+                    </group>
+<!--                    <div class="oe_chatter">-->
+<!--                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>-->
+<!--                        <field name="message_ids" widget="mail_thread"/>-->
+<!--                    </div>-->
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="prescriptions_action_window">
+        <field name="name">Prescriptions</field>
+        <field name="res_model">prescriptions.info</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem name="Configure" id="configure_menu" parent="hospital_menu_root" sequence="16"/>
+    <menuitem name="Prescriptions" id="prescriptions_info" parent="configure_menu"
+              action="prescriptions_action_window"/>
+</odoo>
